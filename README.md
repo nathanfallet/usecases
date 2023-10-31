@@ -16,7 +16,6 @@ compile 'me.nathanfallet.usecases:usecases:1.0.3'
 ```
 
 ```xml
-
 <dependency>
     <groupId>me.nathanfallet.usecases</groupId>
     <artifactId>usecases-jvm</artifactId>
