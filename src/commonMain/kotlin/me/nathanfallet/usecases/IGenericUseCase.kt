@@ -1,0 +1,3 @@
+package me.nathanfallet.usecases
+
+interface IGenericUseCase
