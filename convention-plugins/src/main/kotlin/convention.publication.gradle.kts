@@ -56,7 +56,7 @@ publishing {
 
         // Provide artifacts information requited by Maven Central
         pom {
-            name.set("UseCases")
+            name.set("usecases")
             description.set("UseCase utils for all my libs.")
             url.set("https://github.com/NathanFallet/UseCases")
 
