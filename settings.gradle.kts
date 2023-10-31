@@ -10,3 +10,4 @@ plugins {
 }
 
 rootProject.name = "UseCases"
+includeBuild("convention-plugins")

@@ -1,5 +1,6 @@
 plugins {
-    kotlin("multiplatform") version "1.9.0"
+    kotlin("multiplatform") version "1.9.10"
+    id("convention.publication")
 }
 
 group = "me.nathanfallet.usecases"
@@ -11,7 +12,7 @@ repositories {
 
 kotlin {
     jvm {
-        jvmToolchain(8)
+        jvmToolchain(19)
         withJava()
         testRuns.named("test") {
             executionTask.configure {
