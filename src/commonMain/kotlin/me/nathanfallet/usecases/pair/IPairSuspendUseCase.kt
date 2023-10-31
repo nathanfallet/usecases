@@ -4,8 +4,10 @@ import me.nathanfallet.usecases.ISuspendUseCase
 
 interface IPairSuspendUseCase<I, J, O>: ISuspendUseCase<Pair<I, J>, O> {
 
-    suspend operator fun invoke(input1: I, input2: J): O {
-        return invoke(Pair(input1, input2))
+    suspend operator fun invoke(input1: I, input2: J): O
+
+    override suspend fun invoke(input: Pair<I, J>): O {
+        return invoke(input.first, input.second)
     }
 
 }
