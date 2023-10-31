@@ -19,7 +19,7 @@ compile 'me.nathanfallet.usecases:usecases:1.0.3'
 
 <dependency>
     <groupId>me.nathanfallet.usecases</groupId>
-    <artifactId>usecases</artifactId>
+    <artifactId>usecases-jvm</artifactId>
     <version>1.0.3</version>
 </dependency>
 ```
