@@ -58,7 +58,7 @@ publishing {
         pom {
             name.set("usecases")
             description.set("UseCase utils for all my libs.")
-            url.set("https://github.com/NathanFallet/UseCases")
+            url.set("https://github.com/nathanfallet/usecases")
 
             licenses {
                 license {
@@ -75,7 +75,7 @@ publishing {
                 }
             }
             scm {
-                url.set("https://github.com/NathanFallet/UseCases.git")
+                url.set("https://github.com/nathanfallet/usecases.git")
             }
         }
     }

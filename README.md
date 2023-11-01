@@ -1,9 +1,9 @@
-# UseCases
+# usecases
 
-[![License](https://img.shields.io/github/license/NathanFallet/UseCases)](LICENSE)
-[![Issues](https://img.shields.io/github/issues/NathanFallet/UseCases)]()
-[![Pull Requests](https://img.shields.io/github/issues-pr/NathanFallet/UseCases)]()
-[![Code Size](https://img.shields.io/github/languages/code-size/NathanFallet/UseCases)]()
+[![License](https://img.shields.io/github/license/nathanfallet/usecases)](LICENSE)
+[![Issues](https://img.shields.io/github/issues/nathanfallet/usecases)]()
+[![Pull Requests](https://img.shields.io/github/issues-pr/nathanfallet/usecases)]()
+[![Code Size](https://img.shields.io/github/languages/code-size/nathanfallet/usecases)]()
 
 UseCase utils for all my libs.
 
