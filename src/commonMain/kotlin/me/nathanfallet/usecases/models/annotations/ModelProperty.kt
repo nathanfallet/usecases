@@ -1,4 +1,4 @@
-package me.nathanfallet.usecases.models
+package me.nathanfallet.usecases.models.annotations
 
 @Target(AnnotationTarget.PROPERTY)
 annotation class ModelProperty(

@@ -1,11 +1,10 @@
-package me.nathanfallet.usecases.models
+package me.nathanfallet.usecases.models.annotations
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PayloadKey(
+data class ModelKey(
     val key: String,
     val type: String,
     val style: String,
-    val editable: Boolean,
 )

@@ -1,4 +1,6 @@
-package me.nathanfallet.usecases.base
+package me.nathanfallet.usecases.base.pair
+
+import me.nathanfallet.usecases.base.ISuspendUseCase
 
 interface IPairSuspendUseCase<Input1, Input2, Output> : ISuspendUseCase<Pair<Input1, Input2>, Output> {
 

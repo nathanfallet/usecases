@@ -1,4 +1,6 @@
-package me.nathanfallet.usecases.base
+package me.nathanfallet.usecases.base.pair
+
+import me.nathanfallet.usecases.base.IUseCase
 
 interface IPairUseCase<Input1, Input2, Output> : IUseCase<Pair<Input1, Input2>, Output> {
 

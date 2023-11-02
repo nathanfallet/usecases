@@ -1,3 +1,7 @@
 package me.nathanfallet.usecases.models
 
-interface IModel<Id, CreatePayload, UpdatePayload>
+interface IModel<Id, CreatePayload, UpdatePayload> {
+
+    val id: Id
+
+}

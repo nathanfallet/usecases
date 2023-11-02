@@ -1,4 +1,6 @@
-package me.nathanfallet.usecases.base
+package me.nathanfallet.usecases.base.triple
+
+import me.nathanfallet.usecases.base.IUseCase
 
 interface ITripleUseCase<Input1, Input2, Input3, Output> : IUseCase<Triple<Input1, Input2, Input3>, Output> {
 
