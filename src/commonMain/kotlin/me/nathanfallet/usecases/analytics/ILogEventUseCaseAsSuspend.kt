@@ -1,6 +1,6 @@
 package me.nathanfallet.usecases.analytics
 
-class IILogEventUseCaseAsSuspend(private val useCase: ILogEventUseCase) : ILogEventSuspendUseCase {
+class ILogEventUseCaseAsSuspend(private val useCase: ILogEventUseCase) : ILogEventSuspendUseCase {
 
     override suspend fun invoke(
         input1: IAnalyticsEventName,

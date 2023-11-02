@@ -2,6 +2,8 @@ plugins {
     kotlin("multiplatform") version "1.9.20"
     kotlin("plugin.serialization") version "1.9.20"
     id("convention.publication")
+    id("org.jetbrains.kotlinx.kover") version "0.7.4"
+    id("com.google.devtools.ksp") version "1.9.20-1.0.13"
 }
 
 group = "me.nathanfallet.usecases"
@@ -45,12 +47,15 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                implementation("io.mockative:mockative:2.0.1")
             }
         }
         val jvmMain by getting
@@ -60,4 +65,12 @@ kotlin {
         val nativeMain by getting
         val nativeTest by getting
     }
+}
+
+dependencies {
+    configurations
+        .filter { it.name.startsWith("ksp") && it.name.contains("Test") }
+        .forEach {
+            add(it.name, "io.mockative:mockative-processor:2.0.1")
+        }
 }
