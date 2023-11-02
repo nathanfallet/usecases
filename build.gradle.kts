@@ -1,10 +1,11 @@
 plugins {
-    kotlin("multiplatform") version "1.9.10"
+    kotlin("multiplatform") version "1.9.20"
+    kotlin("plugin.serialization") version "1.9.20"
     id("convention.publication")
 }
 
 group = "me.nathanfallet.usecases"
-version = "1.0.3"
+version = "1.1.0"
 
 repositories {
     mavenCentral()
@@ -40,10 +41,13 @@ kotlin {
         isMingwX64 -> mingwX64("native")
         else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
     }
-
     
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
