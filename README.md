@@ -23,3 +23,178 @@ compile 'me.nathanfallet.usecases:usecases:1.1.1'
 </dependency>
 ```
 
+## Usage
+
+### First UseCase
+
+Create a new class that extends `IUseCase` or `ISuspendUseCase`:
+
+```kotlin
+// IMyUseCase.kt
+interface IMyUseCase : IUseCase<Input, Output>
+```
+
+```kotlin
+// MyUseCase.kt
+class MyUseCase(
+    private val dependency1: Dependency1,
+    // ...
+) : IMyUseCase {
+
+    // If you want to use suspend functions, use `ISuspendUseCase` instead
+    override fun invoke(input: Input): Output {
+        // Do something with dependencies
+        // ...
+
+        // Return output
+        return Output()
+    }
+
+}
+```
+
+Then, you can use it like this: (example with Koin, but you can use any DI library, or even instantiate it manually)
+
+```kotlin
+// Koin.kt
+single<IMyUseCase> { MyUseCase(get(), /*...*/) }
+```
+
+```kotlin
+// Somewhere else
+val useCase = get<IMyUseCase>()
+val output = useCase(Input())
+```
+
+### Variants
+
+`IUseCase` and `ISuspendUseCase` are the base interfaces taking one input and returning one output.
+We made some variants to make it easier to use:
+
+- `IUnitUseCase` and `IUnitSuspendUseCase` for no input
+- `IPairUseCase` and `IPairSuspendUseCase` for two inputs
+- `ITripleUseCase` and `ITripleSuspendUseCase` for three inputs
+
+### Models
+
+A common use of UseCases is to make things with a model. That's why we made an interface for models with associated
+UseCases:
+
+```kotlin
+// MyModel.kt
+data class MyModel(
+    override val id: Long,
+    val property1: String,
+    // ...
+) : IModel<Long, CreateMyModelPayload, UpdateMyModelPayload>
+```
+
+```kotlin
+// CreateMyModelPayload.kt
+data class CreateMyModelPayload(
+    val property1: String,
+    // ...
+)
+```
+
+```kotlin
+// UpdateMyModelPayload.kt
+data class UpdateMyModelPayload(
+    val property1: String?,
+    // ...
+)
+```
+
+`CreateMyModelPayload` and `UpdateMyModelPayload` are payloads used to create and update the model.
+In case you don't support creating or updating your model, you can use `Unit` instead.
+
+Then, you can create and use associated UseCases:
+
+```kotlin
+class GetMyModelUseCase : IGetModelUseCase<MyModel, Long> {
+    /* ... */
+}
+```
+
+```kotlin
+class CreateMyModelUseCase : ICreateModelUseCase<MyModel, CreateMyModelPayload> {
+    /* ... */
+}
+```
+
+```kotlin
+class UpdateMyModelUseCase : IUpdateModelUseCase<MyModel, Long, UpdateMyModelPayload> {
+    /* ... */
+}
+```
+
+```kotlin
+class DeleteMyModelUseCase : IDeleteModelUseCase<MyModel, Long> {
+    /* ... */
+}
+```
+
+Expecting those interfaces can help you to make your code more generic and reusable.
+
+Of course, you can also use suspending variants:
+`IGetModelSuspendUseCase`, `ICreateModelSuspendUseCase`, `IUpdateModelSuspendUseCase` and `IDeleteModelSuspendUseCase`.
+
+### Models with Repositories
+
+We also provide `IModelRepository` and `IModelSuspendRepository` to make repositories for your models:
+
+```kotlin
+class MyModelRepository(
+    private val dependency1: Dependency1,
+    // ...
+) : IModelRepository<MyModelRepository, MyModel, Long, CreateMyModelPayload, UpdateMyModelPayload> {
+
+    override fun get(id: Id): Model? {
+        /* ... */
+    }
+
+    override fun create(payload: CreatePayload): Model? {
+        /* ... */
+    }
+
+    override fun update(id: Id, payload: UpdatePayload): Boolean {
+        /* ... */
+    }
+
+    override fun delete(id: Id): Boolean {
+        /* ... */
+    }
+
+}
+```
+
+Then, we provide default implementations for `IGetModelUseCase`, `ICreateModelUseCase`, `IUpdateModelUseCase`
+and `IDeleteModelUseCase`:
+
+```kotlin
+class GetMyModelUseCase(
+    private val repository: MyModelRepository
+) : GetModelFromRepositoryUseCase<MyModel, Long>(repository)
+```
+
+```kotlin
+class CreateMyModelUseCase(
+    private val repository: MyModelRepository
+) : CreateModelFromRepositoryUseCase<MyModel, CreateMyModelPayload>(repository)
+```
+
+```kotlin
+class UpdateMyModelUseCase(
+    private val repository: MyModelRepository
+) : UpdateModelFromRepositoryUseCase<MyModel, Long, UpdateMyModelPayload>(repository)
+```
+
+```kotlin
+class DeleteMyModelUseCase(
+    private val repository: MyModelRepository
+) : DeleteModelFromRepositoryUseCase<MyModel, Long>(repository)
+```
+
+Suspend variants are available too:
+`GetModelFromRepositorySuspendUseCase`, `CreateModelFromRepositorySuspendUseCase`, `UpdateModelFromRepositorySuspendUseCase`
+and `DeleteModelFromRepositorySuspendUseCase`.
