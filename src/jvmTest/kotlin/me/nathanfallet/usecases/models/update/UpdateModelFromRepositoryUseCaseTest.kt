@@ -1,9 +1,9 @@
 package me.nathanfallet.usecases.models.update
 
 import io.mockative.*
-import me.nathanfallet.usecases.models.CreatePayloadTest
-import me.nathanfallet.usecases.models.ModelTest
-import me.nathanfallet.usecases.models.UpdatePayloadTest
+import me.nathanfallet.usecases.models.mock.CreatePayloadTest
+import me.nathanfallet.usecases.models.mock.ModelTest
+import me.nathanfallet.usecases.models.mock.UpdatePayloadTest
 import me.nathanfallet.usecases.models.repositories.IModelRepository
 import kotlin.test.AfterTest
 import kotlin.test.Test
