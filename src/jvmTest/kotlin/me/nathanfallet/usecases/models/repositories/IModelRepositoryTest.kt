@@ -9,6 +9,31 @@ import kotlin.test.assertEquals
 class IModelRepositoryTest {
 
     @Test
+    fun testGet() {
+        val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override fun get(id: Long): ModelTest {
+                return ModelTest(1, "test")
+            }
+
+            override fun create(payload: CreatePayloadTest): ModelTest {
+                throw NotImplementedError()
+            }
+
+            override fun update(id: Long, payload: UpdatePayloadTest): Boolean {
+                throw NotImplementedError()
+            }
+
+            override fun delete(id: Long): Boolean {
+                throw NotImplementedError()
+            }
+        }
+        assertEquals(
+            ModelTest(1, "test"),
+            repository.get(1, Unit)
+        )
+    }
+
+    @Test
     fun testCreate() {
         val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
             override fun get(id: Long): ModelTest? {
@@ -30,6 +55,56 @@ class IModelRepositoryTest {
         assertEquals(
             ModelTest(1, "test"),
             repository.create(CreatePayloadTest("test"), Unit)
+        )
+    }
+
+    @Test
+    fun testUpdate() {
+        val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override fun get(id: Long): ModelTest? {
+                throw NotImplementedError()
+            }
+
+            override fun create(payload: CreatePayloadTest): ModelTest {
+                throw NotImplementedError()
+            }
+
+            override fun update(id: Long, payload: UpdatePayloadTest): Boolean {
+                return true
+            }
+
+            override fun delete(id: Long): Boolean {
+                throw NotImplementedError()
+            }
+        }
+        assertEquals(
+            true,
+            repository.update(1, UpdatePayloadTest("test"), Unit)
+        )
+    }
+
+    @Test
+    fun testDelete() {
+        val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override fun get(id: Long): ModelTest? {
+                throw NotImplementedError()
+            }
+
+            override fun create(payload: CreatePayloadTest): ModelTest {
+                throw NotImplementedError()
+            }
+
+            override fun update(id: Long, payload: UpdatePayloadTest): Boolean {
+                throw NotImplementedError()
+            }
+
+            override fun delete(id: Long): Boolean {
+                return true
+            }
+        }
+        assertEquals(
+            true,
+            repository.delete(1, Unit)
         )
     }
 
