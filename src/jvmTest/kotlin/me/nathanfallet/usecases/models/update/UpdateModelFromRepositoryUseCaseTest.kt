@@ -1,9 +1,9 @@
 package me.nathanfallet.usecases.models.update
 
 import io.mockative.*
-import me.nathanfallet.usecases.models.CreatePayloadTest
-import me.nathanfallet.usecases.models.ModelTest
-import me.nathanfallet.usecases.models.UpdatePayloadTest
+import me.nathanfallet.usecases.models.mock.CreatePayloadTest
+import me.nathanfallet.usecases.models.mock.ModelTest
+import me.nathanfallet.usecases.models.mock.UpdatePayloadTest
 import me.nathanfallet.usecases.models.repositories.IModelRepository
 import kotlin.test.AfterTest
 import kotlin.test.Test
@@ -23,10 +23,10 @@ class UpdateModelFromRepositoryUseCaseTest {
     fun testInvoke() {
         val useCase = UpdateModelFromRepositoryUseCase(repository)
         every {
-            repository.update(1, UpdatePayloadTest("test"))
+            repository.update(1, UpdatePayloadTest("test"), Unit)
         }.returns(true)
         every {
-            repository.get(1)
+            repository.get(1, Unit)
         }.returns(ModelTest(1, "test"))
         assertEquals(ModelTest(1, "test"), useCase(1, UpdatePayloadTest("test")))
     }
@@ -35,7 +35,7 @@ class UpdateModelFromRepositoryUseCaseTest {
     fun testInvokeFails() {
         val useCase = UpdateModelFromRepositoryUseCase(repository)
         every {
-            repository.update(1, UpdatePayloadTest("test"))
+            repository.update(1, UpdatePayloadTest("test"), Unit)
         }.returns(false)
         assertEquals(null, useCase(1, UpdatePayloadTest("test")))
     }

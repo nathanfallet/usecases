@@ -4,11 +4,15 @@ import me.nathanfallet.usecases.models.IModel
 import me.nathanfallet.usecases.models.repositories.IModelRepository
 
 open class DeleteModelFromRepositoryUseCase<Model : IModel<Id, *, *>, Id>(
-    private val repository: IModelRepository<Model, Id, *, *>
-) : IDeleteModelUseCase<Model, Id> {
+    repository: IModelRepository<Model, Id, *, *>
+) : DeleteChildModelFromRepositoryUseCase<Model, Id, Unit>(repository), IDeleteModelUseCase<Model, Id> {
 
     override fun invoke(input: Id): Boolean {
-        return repository.delete(input)
+        return invoke(input, Unit)
+    }
+
+    override fun invoke(input1: Id, input2: Unit): Boolean {
+        return super<DeleteChildModelFromRepositoryUseCase>.invoke(input1, input2)
     }
 
 }

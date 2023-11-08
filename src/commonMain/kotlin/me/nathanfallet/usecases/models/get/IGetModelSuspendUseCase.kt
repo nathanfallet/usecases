@@ -1,6 +1,13 @@
 package me.nathanfallet.usecases.models.get
 
-import me.nathanfallet.usecases.base.ISuspendUseCase
 import me.nathanfallet.usecases.models.IModel
 
-interface IGetModelSuspendUseCase<Model : IModel<Id, *, *>, Id> : ISuspendUseCase<Id, Model?>
+interface IGetModelSuspendUseCase<Model : IModel<Id, *, *>, Id> : IGetChildModelSuspendUseCase<Model, Id, Unit> {
+
+    suspend operator fun invoke(input: Id): Model?
+
+    override suspend fun invoke(input1: Id, input2: Unit): Model? {
+        return invoke(input1)
+    }
+
+}

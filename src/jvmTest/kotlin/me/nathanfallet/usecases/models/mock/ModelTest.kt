@@ -1,4 +1,6 @@
-package me.nathanfallet.usecases.models
+package me.nathanfallet.usecases.models.mock
+
+import me.nathanfallet.usecases.models.IModel
 
 data class ModelTest(
     override val id: Long,

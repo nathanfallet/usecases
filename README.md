@@ -4,6 +4,7 @@
 [![Issues](https://img.shields.io/github/issues/nathanfallet/usecases)]()
 [![Pull Requests](https://img.shields.io/github/issues-pr/nathanfallet/usecases)]()
 [![Code Size](https://img.shields.io/github/languages/code-size/nathanfallet/usecases)]()
+[![codecov](https://codecov.io/gh/nathanfallet/usecases/graph/badge.svg?token=iIM9xwE4QT)](https://codecov.io/gh/nathanfallet/usecases)
 
 UseCase utils for all my libs.
 
@@ -12,14 +13,14 @@ UseCase utils for all my libs.
 Add dependency to your `build.gradle` or `pom.xml`:
 
 ```groovy
-compile 'me.nathanfallet.usecases:usecases:1.1.1'
+compile 'me.nathanfallet.usecases:usecases:1.2.0'
 ```
 
 ```xml
 <dependency>
     <groupId>me.nathanfallet.usecases</groupId>
     <artifactId>usecases-jvm</artifactId>
-    <version>1.1.1</version>
+    <version>1.2.0</version>
 </dependency>
 ```
 

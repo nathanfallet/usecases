@@ -2,9 +2,9 @@ package me.nathanfallet.usecases.models.delete
 
 import io.mockative.*
 import kotlinx.coroutines.runBlocking
-import me.nathanfallet.usecases.models.CreatePayloadTest
-import me.nathanfallet.usecases.models.ModelTest
-import me.nathanfallet.usecases.models.UpdatePayloadTest
+import me.nathanfallet.usecases.models.mock.CreatePayloadTest
+import me.nathanfallet.usecases.models.mock.ModelTest
+import me.nathanfallet.usecases.models.mock.UpdatePayloadTest
 import me.nathanfallet.usecases.models.repositories.IModelSuspendRepository
 import kotlin.test.AfterTest
 import kotlin.test.Test
@@ -24,7 +24,7 @@ class DeleteModelFromRepositorySuspendUseCaseTest {
     fun testInvoke() = runBlocking {
         val useCase = DeleteModelFromRepositorySuspendUseCase(repository)
         coEvery {
-            repository.delete(1)
+            repository.delete(1, Unit)
         }.returns(true)
         assertEquals(true, useCase(1))
     }
