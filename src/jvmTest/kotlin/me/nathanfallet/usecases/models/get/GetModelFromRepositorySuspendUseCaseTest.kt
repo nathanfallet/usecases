@@ -24,7 +24,7 @@ class GetModelFromRepositorySuspendUseCaseTest {
     fun testInvoke() = runBlocking {
         val useCase = GetModelFromRepositorySuspendUseCase(repository)
         coEvery {
-            repository.get(1)
+            repository.get(1, Unit)
         }.returns(ModelTest(1, "test"))
         assertEquals(ModelTest(1, "test"), useCase(1))
     }

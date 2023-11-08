@@ -4,11 +4,16 @@ import me.nathanfallet.usecases.models.IModel
 import me.nathanfallet.usecases.models.repositories.IModelSuspendRepository
 
 open class CreateModelFromRepositorySuspendUseCase<Model : IModel<*, CreatePayload, *>, CreatePayload>(
-    private val repository: IModelSuspendRepository<Model, *, CreatePayload, *>
-) : ICreateModelSuspendUseCase<Model, CreatePayload> {
+    repository: IModelSuspendRepository<Model, *, CreatePayload, *>
+) : CreateChildModelFromRepositorySuspendUseCase<Model, CreatePayload, Unit>(repository),
+    ICreateModelSuspendUseCase<Model, CreatePayload> {
 
     override suspend fun invoke(input: CreatePayload): Model? {
-        return repository.create(input)
+        return invoke(input, Unit)
+    }
+
+    override suspend fun invoke(input1: CreatePayload, input2: Unit): Model? {
+        return super<CreateChildModelFromRepositorySuspendUseCase>.invoke(input1, input2)
     }
 
 }

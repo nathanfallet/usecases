@@ -23,7 +23,7 @@ class CreateModelFromRepositoryUseCaseTest {
     fun testInvoke() {
         val useCase = CreateModelFromRepositoryUseCase(repository)
         every {
-            repository.create(CreatePayloadTest("test"))
+            repository.create(CreatePayloadTest("test"), Unit)
         }.returns(ModelTest(1, "test"))
         assertEquals(ModelTest(1, "test"), useCase(CreatePayloadTest("test")))
     }

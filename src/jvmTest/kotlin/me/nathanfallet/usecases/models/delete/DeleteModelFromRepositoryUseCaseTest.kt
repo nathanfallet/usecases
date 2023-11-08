@@ -23,7 +23,7 @@ class DeleteModelFromRepositoryUseCaseTest {
     fun testInvoke() {
         val useCase = DeleteModelFromRepositoryUseCase(repository)
         every {
-            repository.delete(1)
+            repository.delete(1, Unit)
         }.returns(true)
         assertEquals(true, useCase(1))
     }

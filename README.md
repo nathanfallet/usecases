@@ -4,6 +4,7 @@
 [![Issues](https://img.shields.io/github/issues/nathanfallet/usecases)]()
 [![Pull Requests](https://img.shields.io/github/issues-pr/nathanfallet/usecases)]()
 [![Code Size](https://img.shields.io/github/languages/code-size/nathanfallet/usecases)]()
+[![codecov](https://codecov.io/gh/nathanfallet/usecases/graph/badge.svg?token=iIM9xwE4QT)](https://codecov.io/gh/nathanfallet/usecases)
 
 UseCase utils for all my libs.
 

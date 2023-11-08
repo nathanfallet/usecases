@@ -24,7 +24,7 @@ class DeleteModelFromRepositorySuspendUseCaseTest {
     fun testInvoke() = runBlocking {
         val useCase = DeleteModelFromRepositorySuspendUseCase(repository)
         coEvery {
-            repository.delete(1)
+            repository.delete(1, Unit)
         }.returns(true)
         assertEquals(true, useCase(1))
     }

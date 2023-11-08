@@ -4,11 +4,15 @@ import me.nathanfallet.usecases.models.IModel
 import me.nathanfallet.usecases.models.repositories.IModelRepository
 
 open class GetModelFromRepositoryUseCase<Model : IModel<Id, *, *>, Id>(
-    private val repository: IModelRepository<Model, Id, *, *>
-) : IGetModelUseCase<Model, Id> {
+    repository: IModelRepository<Model, Id, *, *>
+) : GetChildModelFromRepositoryUseCase<Model, Id, Unit>(repository), IGetModelUseCase<Model, Id> {
 
     override fun invoke(input: Id): Model? {
-        return repository.get(input)
+        return invoke(input, Unit)
+    }
+
+    override fun invoke(input1: Id, input2: Unit): Model? {
+        return super<GetChildModelFromRepositoryUseCase>.invoke(input1, input2)
     }
 
 }

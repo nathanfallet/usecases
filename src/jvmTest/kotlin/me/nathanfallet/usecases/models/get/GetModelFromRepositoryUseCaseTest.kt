@@ -23,7 +23,7 @@ class GetModelFromRepositoryUseCaseTest {
     fun testInvoke() {
         val useCase = GetModelFromRepositoryUseCase(repository)
         every {
-            repository.get(1)
+            repository.get(1, Unit)
         }.returns(ModelTest(1, "test"))
         assertEquals(ModelTest(1, "test"), useCase(1))
     }
