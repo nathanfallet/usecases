@@ -10,4 +10,9 @@ class UnitModelTest {
         assertEquals(Unit, UnitModel.id)
     }
 
+    @Test
+    fun testNamespace() {
+        assertEquals("unitmodels", UnitModel.namespace)
+    }
+
 }
