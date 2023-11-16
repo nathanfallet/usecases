@@ -86,7 +86,7 @@ object ModelAnnotations {
         val params = constructor.parameters.associateWith {
             it.name?.let { name ->
                 it.type.arguments.firstOrNull()?.type?.takeIf { _ ->
-                    it.type.classifier == List::class
+                    it.type.isSubtypeOf(typeOf<List<*>>())
                 }?.let { subtype ->
                     stringValues[name]?.map { value ->
                         constructPrimitiveFromString<Any>(subtype, value)

@@ -3,6 +3,7 @@ package me.nathanfallet.usecases.models.annotations
 import me.nathanfallet.usecases.models.mock.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class ModelAnnotationsTest {
 
@@ -275,6 +276,17 @@ class ModelAnnotationsTest {
                 "1"
             )
         )
+    }
+
+    @Test
+    fun testConstructIdInvalid() {
+        val exception = assertFailsWith(IllegalArgumentException::class) {
+            ModelAnnotations.constructIdFromString(
+                InvalidModelTest::class,
+                ""
+            )
+        }
+        assertEquals("Unsupported id type: kotlin.Unit", exception.message)
     }
 
 }
