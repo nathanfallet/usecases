@@ -1,8 +1,6 @@
 package me.nathanfallet.usecases.models.annotations
 
-import me.nathanfallet.usecases.models.mock.AnnotatedCreatePayload
-import me.nathanfallet.usecases.models.mock.AnnotatedModelTest
-import me.nathanfallet.usecases.models.mock.AnnotatedUpdatePayload
+import me.nathanfallet.usecases.models.mock.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -29,7 +27,7 @@ class ModelAnnotationsTest {
             ),
             ModelAnnotations.updatePayloadKeys(
                 AnnotatedModelTest::class,
-                AnnotatedUpdatePayload::class
+                AnnotatedUpdatePayloadTest::class
             )
         )
     }
@@ -42,7 +40,88 @@ class ModelAnnotationsTest {
             ),
             ModelAnnotations.createPayloadKeys(
                 AnnotatedModelTest::class,
-                AnnotatedCreatePayload::class
+                AnnotatedCreatePayloadTest::class
+            )
+        )
+    }
+
+    @Test
+    fun testConstructPayload() {
+        assertEquals(
+            ConstructPayloadTest(
+                1,
+                2u,
+                3,
+                4u,
+                5,
+                6u,
+                7,
+                8u,
+                'a',
+                9.0f,
+                10.0,
+                "hello world!"
+            ),
+            ModelAnnotations.constructPayload(
+                ConstructPayloadTest::class,
+                mapOf(
+                    "byte" to "1",
+                    "uByte" to "2",
+                    "short" to "3",
+                    "uShort" to "4",
+                    "int" to "5",
+                    "uInt" to "6",
+                    "long" to "7",
+                    "uLong" to "8",
+                    "char" to "a",
+                    "float" to "9.0",
+                    "double" to "10.0",
+                    "string" to "hello world!"
+                )
+            )
+        )
+    }
+
+    @Test
+    fun testConstructPayloadBooleanTrue() {
+        assertEquals(
+            ConstructPayloadBooleanTest(true),
+            ModelAnnotations.constructPayload(
+                ConstructPayloadBooleanTest::class,
+                mapOf("boolean" to "true")
+            )
+        )
+    }
+
+    @Test
+    fun testConstructPayloadBooleanFalse() {
+        assertEquals(
+            ConstructPayloadBooleanTest(false),
+            ModelAnnotations.constructPayload(
+                ConstructPayloadBooleanTest::class,
+                mapOf("boolean" to "false")
+            )
+        )
+    }
+
+    @Test
+    fun testConstructPayloadBooleanOn() {
+        assertEquals(
+            ConstructPayloadBooleanTest(true),
+            ModelAnnotations.constructPayload(
+                ConstructPayloadBooleanTest::class,
+                mapOf("boolean" to "on")
+            )
+        )
+    }
+
+    @Test
+    fun testConstructPayloadBooleanOmitted() {
+        assertEquals(
+            ConstructPayloadBooleanTest(false),
+            ModelAnnotations.constructPayload(
+                ConstructPayloadBooleanTest::class,
+                mapOf()
             )
         )
     }

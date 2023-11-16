@@ -3,6 +3,8 @@ package me.nathanfallet.usecases.models.annotations
 import me.nathanfallet.usecases.models.IChildModel
 import kotlin.reflect.KCallable
 import kotlin.reflect.KClass
+import kotlin.reflect.full.isSubtypeOf
+import kotlin.reflect.typeOf
 
 object ModelAnnotations {
 
@@ -46,6 +48,36 @@ object ModelAnnotations {
         return getAnnotatedMembersSorted<PayloadProperty>(createPayloadClass).map { (member, annotation) ->
             PayloadKey(member.name, annotation.type, annotation.style, true)
         }
+    }
+
+    fun <Output : Any> constructPayload(type: KClass<Output>, stringValues: Map<String, String>): Output? {
+        val constructor = type.constructors.firstOrNull {
+            it.parameters.all { parameter ->
+                parameter.name in stringValues.keys
+                        || parameter.isOptional
+                        || parameter.type.isSubtypeOf(typeOf<Boolean>())
+            }
+        } ?: return null
+        val params = constructor.parameters.associateWith {
+            it.name?.let { name ->
+                when (it.type) {
+                    typeOf<Byte>() -> stringValues[name]?.toByte()
+                    typeOf<UByte>() -> stringValues[name]?.toUByte()
+                    typeOf<Short>() -> stringValues[name]?.toShort()
+                    typeOf<UShort>() -> stringValues[name]?.toUShort()
+                    typeOf<Int>() -> stringValues[name]?.toInt()
+                    typeOf<UInt>() -> stringValues[name]?.toUInt()
+                    typeOf<Long>() -> stringValues[name]?.toLong()
+                    typeOf<ULong>() -> stringValues[name]?.toULong()
+                    typeOf<Boolean>() -> !listOf("false", null).contains(stringValues[name])
+                    typeOf<Char>() -> stringValues[name]?.single()
+                    typeOf<Float>() -> stringValues[name]?.toFloat()
+                    typeOf<Double>() -> stringValues[name]?.toDouble()
+                    else -> stringValues[name]
+                }
+            }
+        }
+        return constructor.callBy(params)
     }
 
 }
