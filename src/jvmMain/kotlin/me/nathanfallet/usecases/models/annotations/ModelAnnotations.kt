@@ -61,18 +61,19 @@ object ModelAnnotations {
         val params = constructor.parameters.associateWith {
             it.name?.let { name ->
                 when (it.type) {
-                    typeOf<Byte>() -> stringValues[name]?.toByte()
-                    typeOf<UByte>() -> stringValues[name]?.toUByte()
-                    typeOf<Short>() -> stringValues[name]?.toShort()
-                    typeOf<UShort>() -> stringValues[name]?.toUShort()
-                    typeOf<Int>() -> stringValues[name]?.toInt()
-                    typeOf<UInt>() -> stringValues[name]?.toUInt()
-                    typeOf<Long>() -> stringValues[name]?.toLong()
-                    typeOf<ULong>() -> stringValues[name]?.toULong()
+                    typeOf<Byte>(), typeOf<Byte?>() -> stringValues[name]?.toByteOrNull()
+                    typeOf<UByte>(), typeOf<UByte?>() -> stringValues[name]?.toUByteOrNull()
+                    typeOf<Short>(), typeOf<Short?>() -> stringValues[name]?.toShortOrNull()
+                    typeOf<UShort>(), typeOf<UShort?>() -> stringValues[name]?.toUShortOrNull()
+                    typeOf<Int>(), typeOf<Int?>() -> stringValues[name]?.toIntOrNull()
+                    typeOf<UInt>(), typeOf<UInt?>() -> stringValues[name]?.toUIntOrNull()
+                    typeOf<Long>(), typeOf<Long?>() -> stringValues[name]?.toLongOrNull()
+                    typeOf<ULong>(), typeOf<ULong?>() -> stringValues[name]?.toULongOrNull()
+                    typeOf<Char>(), typeOf<Char?>() -> stringValues[name]?.singleOrNull()
+                    typeOf<Float>(), typeOf<Float?>() -> stringValues[name]?.toFloatOrNull()
+                    typeOf<Double>(), typeOf<Double?>() -> stringValues[name]?.toDoubleOrNull()
                     typeOf<Boolean>() -> !listOf("false", null).contains(stringValues[name])
-                    typeOf<Char>() -> stringValues[name]?.single()
-                    typeOf<Float>() -> stringValues[name]?.toFloat()
-                    typeOf<Double>() -> stringValues[name]?.toDouble()
+                    typeOf<Boolean?>() -> stringValues[name]?.let { b -> b != "false" }
                     else -> stringValues[name]
                 }
             }

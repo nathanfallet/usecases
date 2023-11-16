@@ -10,5 +10,6 @@ data class AnnotatedModelTest(
     val value: String,
     @ModelProperty("boolean", "checkbox", true)
     val check: Boolean,
+    @RandomAnnotation
     val ignored: String
 ) : IModel<Long, AnnotatedCreatePayloadTest, AnnotatedUpdatePayloadTest>

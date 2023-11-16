@@ -83,6 +83,65 @@ class ModelAnnotationsTest {
     }
 
     @Test
+    fun testConstructPayloadOptionals() {
+        assertEquals(
+            ConstructPayloadOptionalTest(
+                1,
+                2u,
+                3,
+                4u,
+                5,
+                6u,
+                7,
+                8u,
+                'a',
+                9.0f,
+                10.0,
+                "hello world!"
+            ),
+            ModelAnnotations.constructPayload(
+                ConstructPayloadOptionalTest::class,
+                mapOf(
+                    "byte" to "1",
+                    "uByte" to "2",
+                    "short" to "3",
+                    "uShort" to "4",
+                    "int" to "5",
+                    "uInt" to "6",
+                    "long" to "7",
+                    "uLong" to "8",
+                    "char" to "a",
+                    "float" to "9.0",
+                    "double" to "10.0",
+                    "string" to "hello world!"
+                )
+            )
+        )
+    }
+
+    @Test
+    fun testConstructPayloadOptionalsWithNulls() {
+        assertEquals(
+            ConstructPayloadOptionalTest(),
+            ModelAnnotations.constructPayload(
+                ConstructPayloadOptionalTest::class,
+                mapOf()
+            )
+        )
+    }
+
+    @Test
+    fun testConstructPayloadMissingKeys() {
+        assertEquals(
+            null,
+            ModelAnnotations.constructPayload(
+                ConstructPayloadTest::class,
+                mapOf()
+            )
+        )
+    }
+
+    @Test
     fun testConstructPayloadBooleanTrue() {
         assertEquals(
             ConstructPayloadBooleanTest(true),
@@ -121,6 +180,50 @@ class ModelAnnotationsTest {
             ConstructPayloadBooleanTest(false),
             ModelAnnotations.constructPayload(
                 ConstructPayloadBooleanTest::class,
+                mapOf()
+            )
+        )
+    }
+
+    @Test
+    fun testConstructPayloadOptionalBooleanTrue() {
+        assertEquals(
+            ConstructPayloadOptionalBooleanTest(true),
+            ModelAnnotations.constructPayload(
+                ConstructPayloadOptionalBooleanTest::class,
+                mapOf("boolean" to "true")
+            )
+        )
+    }
+
+    @Test
+    fun testConstructPayloadOptionalBooleanFalse() {
+        assertEquals(
+            ConstructPayloadOptionalBooleanTest(false),
+            ModelAnnotations.constructPayload(
+                ConstructPayloadOptionalBooleanTest::class,
+                mapOf("boolean" to "false")
+            )
+        )
+    }
+
+    @Test
+    fun testConstructPayloadOptionalBooleanOn() {
+        assertEquals(
+            ConstructPayloadOptionalBooleanTest(true),
+            ModelAnnotations.constructPayload(
+                ConstructPayloadOptionalBooleanTest::class,
+                mapOf("boolean" to "on")
+            )
+        )
+    }
+
+    @Test
+    fun testConstructPayloadOptionalBooleanOmitted() {
+        assertEquals(
+            ConstructPayloadOptionalBooleanTest(),
+            ModelAnnotations.constructPayload(
+                ConstructPayloadOptionalBooleanTest::class,
                 mapOf()
             )
         )
