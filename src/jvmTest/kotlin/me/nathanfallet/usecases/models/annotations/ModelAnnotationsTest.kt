@@ -62,7 +62,7 @@ class ModelAnnotationsTest {
                 10.0,
                 "hello world!"
             ),
-            ModelAnnotations.constructPayload(
+            ModelAnnotations.constructPayloadFromStrings(
                 ConstructPayloadTest::class,
                 mapOf(
                     "byte" to "1",
@@ -99,7 +99,7 @@ class ModelAnnotationsTest {
                 10.0,
                 "hello world!"
             ),
-            ModelAnnotations.constructPayload(
+            ModelAnnotations.constructPayloadFromStrings(
                 ConstructPayloadOptionalTest::class,
                 mapOf(
                     "byte" to "1",
@@ -120,10 +120,47 @@ class ModelAnnotationsTest {
     }
 
     @Test
+    fun testConstructPayloadLists() {
+        assertEquals(
+            ConstructPayloadListTest(
+                listOf(1),
+                listOf(2u),
+                listOf(3),
+                listOf(4u),
+                listOf(5),
+                listOf(6u),
+                listOf(7),
+                listOf(8u),
+                listOf('a'),
+                listOf(9.0f),
+                listOf(10.0),
+                listOf("hello world!")
+            ),
+            ModelAnnotations.constructPayloadFromStringLists(
+                ConstructPayloadListTest::class,
+                mapOf(
+                    "byte" to listOf("1"),
+                    "uByte" to listOf("2"),
+                    "short" to listOf("3"),
+                    "uShort" to listOf("4"),
+                    "int" to listOf("5"),
+                    "uInt" to listOf("6"),
+                    "long" to listOf("7"),
+                    "uLong" to listOf("8"),
+                    "char" to listOf("a"),
+                    "float" to listOf("9.0"),
+                    "double" to listOf("10.0"),
+                    "string" to listOf("hello world!")
+                )
+            )
+        )
+    }
+
+    @Test
     fun testConstructPayloadOptionalsWithNulls() {
         assertEquals(
             ConstructPayloadOptionalTest(),
-            ModelAnnotations.constructPayload(
+            ModelAnnotations.constructPayloadFromStrings(
                 ConstructPayloadOptionalTest::class,
                 mapOf()
             )
@@ -134,7 +171,7 @@ class ModelAnnotationsTest {
     fun testConstructPayloadMissingKeys() {
         assertEquals(
             null,
-            ModelAnnotations.constructPayload(
+            ModelAnnotations.constructPayloadFromStrings(
                 ConstructPayloadTest::class,
                 mapOf()
             )
@@ -145,7 +182,7 @@ class ModelAnnotationsTest {
     fun testConstructPayloadBooleanTrue() {
         assertEquals(
             ConstructPayloadBooleanTest(true),
-            ModelAnnotations.constructPayload(
+            ModelAnnotations.constructPayloadFromStrings(
                 ConstructPayloadBooleanTest::class,
                 mapOf("boolean" to "true")
             )
@@ -156,7 +193,7 @@ class ModelAnnotationsTest {
     fun testConstructPayloadBooleanFalse() {
         assertEquals(
             ConstructPayloadBooleanTest(false),
-            ModelAnnotations.constructPayload(
+            ModelAnnotations.constructPayloadFromStrings(
                 ConstructPayloadBooleanTest::class,
                 mapOf("boolean" to "false")
             )
@@ -167,7 +204,7 @@ class ModelAnnotationsTest {
     fun testConstructPayloadBooleanOn() {
         assertEquals(
             ConstructPayloadBooleanTest(true),
-            ModelAnnotations.constructPayload(
+            ModelAnnotations.constructPayloadFromStrings(
                 ConstructPayloadBooleanTest::class,
                 mapOf("boolean" to "on")
             )
@@ -178,7 +215,7 @@ class ModelAnnotationsTest {
     fun testConstructPayloadBooleanOmitted() {
         assertEquals(
             ConstructPayloadBooleanTest(false),
-            ModelAnnotations.constructPayload(
+            ModelAnnotations.constructPayloadFromStrings(
                 ConstructPayloadBooleanTest::class,
                 mapOf()
             )
@@ -189,7 +226,7 @@ class ModelAnnotationsTest {
     fun testConstructPayloadOptionalBooleanTrue() {
         assertEquals(
             ConstructPayloadOptionalBooleanTest(true),
-            ModelAnnotations.constructPayload(
+            ModelAnnotations.constructPayloadFromStrings(
                 ConstructPayloadOptionalBooleanTest::class,
                 mapOf("boolean" to "true")
             )
@@ -200,7 +237,7 @@ class ModelAnnotationsTest {
     fun testConstructPayloadOptionalBooleanFalse() {
         assertEquals(
             ConstructPayloadOptionalBooleanTest(false),
-            ModelAnnotations.constructPayload(
+            ModelAnnotations.constructPayloadFromStrings(
                 ConstructPayloadOptionalBooleanTest::class,
                 mapOf("boolean" to "false")
             )
@@ -211,7 +248,7 @@ class ModelAnnotationsTest {
     fun testConstructPayloadOptionalBooleanOn() {
         assertEquals(
             ConstructPayloadOptionalBooleanTest(true),
-            ModelAnnotations.constructPayload(
+            ModelAnnotations.constructPayloadFromStrings(
                 ConstructPayloadOptionalBooleanTest::class,
                 mapOf("boolean" to "on")
             )
@@ -222,9 +259,20 @@ class ModelAnnotationsTest {
     fun testConstructPayloadOptionalBooleanOmitted() {
         assertEquals(
             ConstructPayloadOptionalBooleanTest(),
-            ModelAnnotations.constructPayload(
+            ModelAnnotations.constructPayloadFromStrings(
                 ConstructPayloadOptionalBooleanTest::class,
                 mapOf()
+            )
+        )
+    }
+
+    @Test
+    fun testConstructId() {
+        assertEquals(
+            1,
+            ModelAnnotations.constructIdFromString(
+                ModelTest::class,
+                "1"
             )
         )
     }
