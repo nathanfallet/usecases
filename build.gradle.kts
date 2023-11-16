@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "me.nathanfallet.usecases"
-version = "1.2.1"
+version = "1.2.2"
 
 repositories {
     mavenCentral()
@@ -61,6 +61,11 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
+            }
+        }
+        val jvmMain by getting {
+            dependencies {
+                implementation(kotlin("reflect"))
             }
         }
         val commonTest by getting {
