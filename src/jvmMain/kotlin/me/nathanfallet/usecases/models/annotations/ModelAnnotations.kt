@@ -3,6 +3,7 @@ package me.nathanfallet.usecases.models.annotations
 import me.nathanfallet.usecases.models.IChildModel
 import kotlin.reflect.KCallable
 import kotlin.reflect.KClass
+import kotlin.reflect.KType
 import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.typeOf
 
@@ -50,7 +51,31 @@ object ModelAnnotations {
         }
     }
 
-    fun <Output : Any> constructPayload(type: KClass<Output>, stringValues: Map<String, String>): Output? {
+    @Suppress("UNCHECKED_CAST")
+    private fun <Output : Any> constructPrimitiveFromString(type: KType, value: String?): Output? {
+        return when (type) {
+            typeOf<Byte>(), typeOf<Byte?>() -> value?.toByteOrNull()
+            typeOf<UByte>(), typeOf<UByte?>() -> value?.toUByteOrNull()
+            typeOf<Short>(), typeOf<Short?>() -> value?.toShortOrNull()
+            typeOf<UShort>(), typeOf<UShort?>() -> value?.toUShortOrNull()
+            typeOf<Int>(), typeOf<Int?>() -> value?.toIntOrNull()
+            typeOf<UInt>(), typeOf<UInt?>() -> value?.toUIntOrNull()
+            typeOf<Long>(), typeOf<Long?>() -> value?.toLongOrNull()
+            typeOf<ULong>(), typeOf<ULong?>() -> value?.toULongOrNull()
+            typeOf<Char>(), typeOf<Char?>() -> value?.singleOrNull()
+            typeOf<Float>(), typeOf<Float?>() -> value?.toFloatOrNull()
+            typeOf<Double>(), typeOf<Double?>() -> value?.toDoubleOrNull()
+            typeOf<Boolean>() -> !listOf("false", null).contains(value)
+            typeOf<Boolean?>() -> value?.let { b -> b != "false" }
+            typeOf<String>(), typeOf<String?>() -> value
+            else -> null
+        } as Output?
+    }
+
+    fun <Output : Any> constructPayloadFromStringLists(
+        type: KClass<Output>,
+        stringValues: Map<String, List<String>>
+    ): Output? {
         val constructor = type.constructors.firstOrNull {
             it.parameters.all { parameter ->
                 parameter.name in stringValues.keys
@@ -60,25 +85,26 @@ object ModelAnnotations {
         } ?: return null
         val params = constructor.parameters.associateWith {
             it.name?.let { name ->
-                when (it.type) {
-                    typeOf<Byte>(), typeOf<Byte?>() -> stringValues[name]?.toByteOrNull()
-                    typeOf<UByte>(), typeOf<UByte?>() -> stringValues[name]?.toUByteOrNull()
-                    typeOf<Short>(), typeOf<Short?>() -> stringValues[name]?.toShortOrNull()
-                    typeOf<UShort>(), typeOf<UShort?>() -> stringValues[name]?.toUShortOrNull()
-                    typeOf<Int>(), typeOf<Int?>() -> stringValues[name]?.toIntOrNull()
-                    typeOf<UInt>(), typeOf<UInt?>() -> stringValues[name]?.toUIntOrNull()
-                    typeOf<Long>(), typeOf<Long?>() -> stringValues[name]?.toLongOrNull()
-                    typeOf<ULong>(), typeOf<ULong?>() -> stringValues[name]?.toULongOrNull()
-                    typeOf<Char>(), typeOf<Char?>() -> stringValues[name]?.singleOrNull()
-                    typeOf<Float>(), typeOf<Float?>() -> stringValues[name]?.toFloatOrNull()
-                    typeOf<Double>(), typeOf<Double?>() -> stringValues[name]?.toDoubleOrNull()
-                    typeOf<Boolean>() -> !listOf("false", null).contains(stringValues[name])
-                    typeOf<Boolean?>() -> stringValues[name]?.let { b -> b != "false" }
-                    else -> stringValues[name]
-                }
+                it.type.arguments.firstOrNull()?.type?.takeIf { _ ->
+                    it.type.isSubtypeOf(typeOf<List<*>>())
+                }?.let { subtype ->
+                    stringValues[name]?.map { value ->
+                        constructPrimitiveFromString<Any>(subtype, value)
+                    }
+                } ?: constructPrimitiveFromString<Any>(it.type, stringValues[name]?.singleOrNull())
             }
         }
         return constructor.callBy(params)
+    }
+
+    fun <Output : Any> constructPayloadFromStrings(type: KClass<Output>, stringValues: Map<String, String>): Output? {
+        return constructPayloadFromStringLists(type, stringValues.mapValues { listOf(it.value) })
+    }
+
+    fun <Model : IChildModel<Id, *, *, *>, Id> constructIdFromString(modelClass: KClass<Model>, id: String): Id {
+        val idType = modelClass.members.first { it.name == "id" }.returnType
+        return constructPrimitiveFromString(idType, id)
+            ?: throw IllegalArgumentException("Unsupported id type: $idType")
     }
 
 }

@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "me.nathanfallet.usecases"
-version = "1.2.2"
+version = "1.2.3"
 
 repositories {
     mavenCentral()
