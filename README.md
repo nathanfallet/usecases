@@ -13,7 +13,7 @@ UseCase utils for all my libs.
 Add dependency to your `build.gradle` or `pom.xml`:
 
 ```groovy
-compile 'me.nathanfallet.usecases:usecases:1.2.3'
+compile 'me.nathanfallet.usecases:usecases:1.2.4'
 ```
 
 ```xml
@@ -21,7 +21,7 @@ compile 'me.nathanfallet.usecases:usecases:1.2.3'
 <dependency>
     <groupId>me.nathanfallet.usecases</groupId>
     <artifactId>usecases-jvm</artifactId>
-    <version>1.2.3</version>
+    <version>1.2.4</version>
 </dependency>
 ```
 
