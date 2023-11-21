@@ -10,8 +10,82 @@ import kotlin.test.assertEquals
 class IModelSuspendRepositoryTest {
 
     @Test
+    fun testList() = runBlocking {
+        val repository = object : IModelSuspendRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override suspend fun list(): List<ModelTest> {
+                return listOf(ModelTest(1, "test"))
+            }
+
+            override suspend fun list(limit: Long, offset: Long): List<ModelTest> {
+                throw NotImplementedError()
+            }
+
+            override suspend fun get(id: Long): ModelTest {
+                throw NotImplementedError()
+            }
+
+            override suspend fun create(payload: CreatePayloadTest): ModelTest {
+                throw NotImplementedError()
+            }
+
+            override suspend fun update(id: Long, payload: UpdatePayloadTest): Boolean {
+                throw NotImplementedError()
+            }
+
+            override suspend fun delete(id: Long): Boolean {
+                throw NotImplementedError()
+            }
+        }
+        assertEquals(
+            listOf(ModelTest(1, "test")),
+            repository.list(Unit)
+        )
+    }
+
+    @Test
+    fun testListLimitOffset() = runBlocking {
+        val repository = object : IModelSuspendRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override suspend fun list(): List<ModelTest> {
+                throw NotImplementedError()
+            }
+
+            override suspend fun list(limit: Long, offset: Long): List<ModelTest> {
+                return listOf(ModelTest(1, "test"))
+            }
+
+            override suspend fun get(id: Long): ModelTest {
+                throw NotImplementedError()
+            }
+
+            override suspend fun create(payload: CreatePayloadTest): ModelTest {
+                throw NotImplementedError()
+            }
+
+            override suspend fun update(id: Long, payload: UpdatePayloadTest): Boolean {
+                throw NotImplementedError()
+            }
+
+            override suspend fun delete(id: Long): Boolean {
+                throw NotImplementedError()
+            }
+        }
+        assertEquals(
+            listOf(ModelTest(1, "test")),
+            repository.list(1, 0, Unit)
+        )
+    }
+
+    @Test
     fun testGet() = runBlocking {
         val repository = object : IModelSuspendRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override suspend fun list(): List<ModelTest> {
+                throw NotImplementedError()
+            }
+
+            override suspend fun list(limit: Long, offset: Long): List<ModelTest> {
+                throw NotImplementedError()
+            }
+
             override suspend fun get(id: Long): ModelTest {
                 return ModelTest(1, "test")
             }
@@ -37,6 +111,14 @@ class IModelSuspendRepositoryTest {
     @Test
     fun testCreate() = runBlocking {
         val repository = object : IModelSuspendRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override suspend fun list(): List<ModelTest> {
+                throw NotImplementedError()
+            }
+
+            override suspend fun list(limit: Long, offset: Long): List<ModelTest> {
+                throw NotImplementedError()
+            }
+
             override suspend fun get(id: Long): ModelTest? {
                 throw NotImplementedError()
             }
@@ -62,6 +144,14 @@ class IModelSuspendRepositoryTest {
     @Test
     fun testUpdate() = runBlocking {
         val repository = object : IModelSuspendRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override suspend fun list(): List<ModelTest> {
+                throw NotImplementedError()
+            }
+
+            override suspend fun list(limit: Long, offset: Long): List<ModelTest> {
+                throw NotImplementedError()
+            }
+
             override suspend fun get(id: Long): ModelTest? {
                 throw NotImplementedError()
             }
@@ -87,6 +177,14 @@ class IModelSuspendRepositoryTest {
     @Test
     fun testDelete() = runBlocking {
         val repository = object : IModelSuspendRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override suspend fun list(): List<ModelTest> {
+                throw NotImplementedError()
+            }
+
+            override suspend fun list(limit: Long, offset: Long): List<ModelTest> {
+                throw NotImplementedError()
+            }
+
             override suspend fun get(id: Long): ModelTest? {
                 throw NotImplementedError()
             }
