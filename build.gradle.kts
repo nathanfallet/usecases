@@ -4,10 +4,11 @@ plugins {
     id("convention.publication")
     id("org.jetbrains.kotlinx.kover") version "0.7.4"
     id("com.google.devtools.ksp") version "1.9.20-1.0.13"
+    id("dev.petuska.npm.publish") version "3.4.1"
 }
 
 group = "me.nathanfallet.usecases"
-version = "1.3.0"
+version = "1.3.1"
 
 repositories {
     mavenCentral()
@@ -56,16 +57,27 @@ kotlin {
 
     applyDefaultHierarchyTemplate()
     sourceSets {
+        all {
+            languageSettings.apply {
+                optIn("kotlin.js.ExperimentalJsExport")
+            }
+        }
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
+
+                api("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
             }
         }
         val jvmMain by getting {
             dependencies {
                 implementation(kotlin("reflect"))
+            }
+        }
+        val jsMain by getting {
+            dependencies {
+                api("org.jetbrains.kotlin-wrappers:kotlin-js:1.0.0-pre.648")
             }
         }
         val commonTest by getting {
@@ -83,4 +95,20 @@ dependencies {
         .forEach {
             add(it.name, "io.mockative:mockative-processor:2.0.1")
         }
+}
+
+npmPublish {
+    readme.set(file("README.md"))
+    packages {
+        named("js") {
+            packageJson {
+                name.set("usecases-kt")
+            }
+        }
+    }
+    registries {
+        register("npmjs") {
+            uri.set("https://registry.npmjs.org")
+        }
+    }
 }

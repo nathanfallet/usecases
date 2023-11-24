@@ -2,7 +2,9 @@ package me.nathanfallet.usecases.models.get
 
 import me.nathanfallet.usecases.models.IModel
 import me.nathanfallet.usecases.models.repositories.IModelRepository
+import kotlin.js.JsExport
 
+@JsExport
 open class GetModelFromRepositoryUseCase<Model : IModel<Id, *, *>, Id>(
     repository: IModelRepository<Model, Id, *, *>
 ) : GetChildModelFromRepositoryUseCase<Model, Id, Unit>(repository), IGetModelUseCase<Model, Id> {
