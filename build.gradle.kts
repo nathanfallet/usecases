@@ -4,6 +4,7 @@ plugins {
     id("convention.publication")
     id("org.jetbrains.kotlinx.kover") version "0.7.4"
     id("com.google.devtools.ksp") version "1.9.20-1.0.13"
+    id("dev.petuska.npm.publish") version "3.4.1"
 }
 
 group = "me.nathanfallet.usecases"
@@ -56,6 +57,11 @@ kotlin {
 
     applyDefaultHierarchyTemplate()
     sourceSets {
+        all {
+            languageSettings.apply {
+                optIn("kotlin.js.ExperimentalJsExport")
+            }
+        }
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
@@ -89,4 +95,20 @@ dependencies {
         .forEach {
             add(it.name, "io.mockative:mockative-processor:2.0.1")
         }
+}
+
+npmPublish {
+    readme.set(file("README.md"))
+    packages {
+        named("js") {
+            packageJson {
+                name.set("usecases-kt")
+            }
+        }
+    }
+    registries {
+        register("npmjs") {
+            uri.set("https://registry.npmjs.org")
+        }
+    }
 }

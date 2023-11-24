@@ -2,7 +2,9 @@ package me.nathanfallet.usecases.models.update
 
 import me.nathanfallet.usecases.models.IChildModel
 import me.nathanfallet.usecases.models.repositories.IChildModelRepository
+import kotlin.js.JsExport
 
+@JsExport
 open class UpdateChildModelFromRepositoryUseCase<Model : IChildModel<Id, *, UpdatePayload, ParentId>, Id, UpdatePayload, ParentId>(
     private val repository: IChildModelRepository<Model, Id, *, UpdatePayload, ParentId>
 ) : IUpdateChildModelUseCase<Model, Id, UpdatePayload, ParentId> {
