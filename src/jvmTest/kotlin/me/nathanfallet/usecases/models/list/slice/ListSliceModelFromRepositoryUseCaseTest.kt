@@ -1,4 +1,4 @@
-package me.nathanfallet.usecases.models.list
+package me.nathanfallet.usecases.models.list.slice
 
 import io.mockative.*
 import me.nathanfallet.usecases.models.mock.CreatePayloadTest
@@ -9,7 +9,7 @@ import kotlin.test.AfterTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class ListModelFromRepositoryUseCaseTest {
+class ListSliceModelFromRepositoryUseCaseTest {
 
     @Mock
     val repository = mock(classOf<IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest>>())
@@ -20,12 +20,12 @@ class ListModelFromRepositoryUseCaseTest {
     }
 
     @Test
-    fun testInvoke() {
-        val useCase = ListModelFromRepositoryUseCase(repository)
+    fun testInvokeLimitOffset() {
+        val useCase = ListSliceModelFromRepositoryUseCase(repository)
         every {
-            repository.list(Unit)
+            repository.list(1, 0, Unit)
         }.returns(listOf(ModelTest(1, "test")))
-        assertEquals(listOf(ModelTest(1, "test")), useCase())
+        assertEquals(listOf(ModelTest(1, "test")), useCase(1, 0))
     }
 
 }

@@ -1,4 +1,4 @@
-package me.nathanfallet.usecases.models.list
+package me.nathanfallet.usecases.models.list.slice
 
 import io.mockative.*
 import kotlinx.coroutines.runBlocking
@@ -10,7 +10,7 @@ import kotlin.test.AfterTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class ListModelFromRepositorySuspendUseCaseTest {
+class ListSliceModelFromRepositorySuspendUseCaseTest {
 
     @Mock
     val repository = mock(classOf<IModelSuspendRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest>>())
@@ -21,12 +21,12 @@ class ListModelFromRepositorySuspendUseCaseTest {
     }
 
     @Test
-    fun testInvoke() = runBlocking {
-        val useCase = ListModelFromRepositorySuspendUseCase(repository)
+    fun testInvokeLimitOffset() = runBlocking {
+        val useCase = ListSliceModelFromRepositorySuspendUseCase(repository)
         coEvery {
-            repository.list(Unit)
+            repository.list(1, 0, Unit)
         }.returns(listOf(ModelTest(1, "test")))
-        assertEquals(listOf(ModelTest(1, "test")), useCase())
+        assertEquals(listOf(ModelTest(1, "test")), useCase(1, 0))
     }
 
 }
