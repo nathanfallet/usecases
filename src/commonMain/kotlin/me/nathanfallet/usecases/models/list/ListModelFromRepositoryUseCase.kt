@@ -17,12 +17,4 @@ open class ListModelFromRepositoryUseCase<Model : IModel<*, *, *>>(
         return super<ListChildModelFromRepositoryUseCase>.invoke(input)
     }
 
-    override fun invoke(input1: Long, input2: Long): List<Model> {
-        return invoke(input1, input2, Unit)
-    }
-
-    override fun invoke(input1: Long, input2: Long, input3: Unit): List<Model> {
-        return super<ListChildModelFromRepositoryUseCase>.invoke(input1, input2, input3)
-    }
-
 }

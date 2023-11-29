@@ -3,6 +3,7 @@ package me.nathanfallet.usecases.models.repositories
 import me.nathanfallet.usecases.models.mock.CreatePayloadTest
 import me.nathanfallet.usecases.models.mock.ModelTest
 import me.nathanfallet.usecases.models.mock.UpdatePayloadTest
+import me.nathanfallet.usecases.users.IUser
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -23,11 +24,11 @@ class IModelRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override fun create(payload: CreatePayloadTest): ModelTest {
+            override fun create(payload: CreatePayloadTest, user: IUser?): ModelTest {
                 throw NotImplementedError()
             }
 
-            override fun update(id: Long, payload: UpdatePayloadTest): Boolean {
+            override fun update(id: Long, payload: UpdatePayloadTest, user: IUser?): Boolean {
                 throw NotImplementedError()
             }
 
@@ -56,11 +57,11 @@ class IModelRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override fun create(payload: CreatePayloadTest): ModelTest {
+            override fun create(payload: CreatePayloadTest, user: IUser?): ModelTest {
                 throw NotImplementedError()
             }
 
-            override fun update(id: Long, payload: UpdatePayloadTest): Boolean {
+            override fun update(id: Long, payload: UpdatePayloadTest, user: IUser?): Boolean {
                 throw NotImplementedError()
             }
 
@@ -89,11 +90,11 @@ class IModelRepositoryTest {
                 return ModelTest(1, "test")
             }
 
-            override fun create(payload: CreatePayloadTest): ModelTest {
+            override fun create(payload: CreatePayloadTest, user: IUser?): ModelTest {
                 throw NotImplementedError()
             }
 
-            override fun update(id: Long, payload: UpdatePayloadTest): Boolean {
+            override fun update(id: Long, payload: UpdatePayloadTest, user: IUser?): Boolean {
                 throw NotImplementedError()
             }
 
@@ -122,11 +123,11 @@ class IModelRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override fun create(payload: CreatePayloadTest): ModelTest {
+            override fun create(payload: CreatePayloadTest, user: IUser?): ModelTest {
                 return ModelTest(1, payload.value)
             }
 
-            override fun update(id: Long, payload: UpdatePayloadTest): Boolean {
+            override fun update(id: Long, payload: UpdatePayloadTest, user: IUser?): Boolean {
                 throw NotImplementedError()
             }
 
@@ -155,11 +156,11 @@ class IModelRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override fun create(payload: CreatePayloadTest): ModelTest {
+            override fun create(payload: CreatePayloadTest, user: IUser?): ModelTest {
                 throw NotImplementedError()
             }
 
-            override fun update(id: Long, payload: UpdatePayloadTest): Boolean {
+            override fun update(id: Long, payload: UpdatePayloadTest, user: IUser?): Boolean {
                 return true
             }
 
@@ -188,11 +189,11 @@ class IModelRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override fun create(payload: CreatePayloadTest): ModelTest {
+            override fun create(payload: CreatePayloadTest, user: IUser?): ModelTest {
                 throw NotImplementedError()
             }
 
-            override fun update(id: Long, payload: UpdatePayloadTest): Boolean {
+            override fun update(id: Long, payload: UpdatePayloadTest, user: IUser?): Boolean {
                 throw NotImplementedError()
             }
 

@@ -28,13 +28,4 @@ class ListModelFromRepositoryUseCaseTest {
         assertEquals(listOf(ModelTest(1, "test")), useCase())
     }
 
-    @Test
-    fun testInvokeLimitOffset() {
-        val useCase = ListModelFromRepositoryUseCase(repository)
-        every {
-            repository.list(1, 0, Unit)
-        }.returns(listOf(ModelTest(1, "test")))
-        assertEquals(listOf(ModelTest(1, "test")), useCase(1, 0))
-    }
-
 }

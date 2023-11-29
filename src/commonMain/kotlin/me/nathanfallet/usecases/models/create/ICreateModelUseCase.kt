@@ -7,6 +7,7 @@ import kotlin.js.JsName
 @JsExport
 interface ICreateModelUseCase<Model : IModel<*, CreatePayload, *>, CreatePayload> :
     ICreateChildModelUseCase<Model, CreatePayload, Unit> {
+
     @JsName("invokeDefault")
     operator fun invoke(input: CreatePayload): Model?
 
