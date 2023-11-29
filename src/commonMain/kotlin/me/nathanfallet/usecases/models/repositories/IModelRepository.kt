@@ -1,6 +1,7 @@
 package me.nathanfallet.usecases.models.repositories
 
 import me.nathanfallet.usecases.models.IModel
+import me.nathanfallet.usecases.users.IUser
 import kotlin.js.JsExport
 import kotlin.js.JsName
 
@@ -18,10 +19,10 @@ interface IModelRepository<Model : IModel<Id, CreatePayload, UpdatePayload>, Id,
     fun get(id: Id): Model?
 
     @JsName("createDefault")
-    fun create(payload: CreatePayload): Model?
+    fun create(payload: CreatePayload, user: IUser? = null): Model?
 
     @JsName("updateDefault")
-    fun update(id: Id, payload: UpdatePayload): Boolean
+    fun update(id: Id, payload: UpdatePayload, user: IUser? = null): Boolean
 
     @JsName("deleteDefault")
     fun delete(id: Id): Boolean
@@ -38,12 +39,12 @@ interface IModelRepository<Model : IModel<Id, CreatePayload, UpdatePayload>, Id,
         return get(id)
     }
 
-    override fun create(payload: CreatePayload, parentId: Unit): Model? {
-        return create(payload)
+    override fun create(payload: CreatePayload, parentId: Unit, user: IUser?): Model? {
+        return create(payload, user)
     }
 
-    override fun update(id: Id, payload: UpdatePayload, parentId: Unit): Boolean {
-        return update(id, payload)
+    override fun update(id: Id, payload: UpdatePayload, parentId: Unit, user: IUser?): Boolean {
+        return update(id, payload, user)
     }
 
     override fun delete(id: Id, parentId: Unit): Boolean {
