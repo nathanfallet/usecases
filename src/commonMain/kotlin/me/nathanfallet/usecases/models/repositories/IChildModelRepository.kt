@@ -1,21 +1,36 @@
 package me.nathanfallet.usecases.models.repositories
 
+import me.nathanfallet.usecases.context.IContext
 import me.nathanfallet.usecases.models.IChildModel
-import me.nathanfallet.usecases.users.IUser
 import kotlin.js.JsExport
 import kotlin.js.JsName
 
 @JsExport
 interface IChildModelRepository<Model : IChildModel<Id, CreatePayload, UpdatePayload, ParentId>, Id, CreatePayload, UpdatePayload, ParentId> {
 
-    fun list(parentId: ParentId): List<Model>
+    fun list(parentId: ParentId, context: IContext? = null): List<Model> {
+        throw UnsupportedOperationException()
+    }
 
     @JsName("listWithLimit")
-    fun list(limit: Long, offset: Long, parentId: ParentId): List<Model>
+    fun list(limit: Long, offset: Long, parentId: ParentId, context: IContext? = null): List<Model> {
+        throw UnsupportedOperationException()
+    }
 
-    fun get(id: Id, parentId: ParentId): Model?
-    fun create(payload: CreatePayload, parentId: ParentId, user: IUser? = null): Model?
-    fun update(id: Id, payload: UpdatePayload, parentId: ParentId, user: IUser? = null): Boolean
-    fun delete(id: Id, parentId: ParentId): Boolean
+    fun get(id: Id, parentId: ParentId, context: IContext? = null): Model? {
+        throw UnsupportedOperationException()
+    }
+
+    fun create(payload: CreatePayload, parentId: ParentId, context: IContext? = null): Model? {
+        throw UnsupportedOperationException()
+    }
+
+    fun update(id: Id, payload: UpdatePayload, parentId: ParentId, context: IContext? = null): Boolean {
+        throw UnsupportedOperationException()
+    }
+
+    fun delete(id: Id, parentId: ParentId, context: IContext? = null): Boolean {
+        throw UnsupportedOperationException()
+    }
 
 }
