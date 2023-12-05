@@ -25,6 +25,19 @@ class IModelSuspendRepositoryTest {
     }
 
     @Test
+    fun testListNullContext() = runBlocking {
+        val repository = object : IModelSuspendRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override suspend fun list(context: IContext?): List<ModelTest> {
+                return listOf(ModelTest(1, "test"))
+            }
+        }
+        assertEquals(
+            listOf(ModelTest(1, "test")),
+            repository.list()
+        )
+    }
+
+    @Test
     fun testListUnsupported(): Unit = runBlocking {
         val repository = object : IModelSuspendRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {}
         assertFailsWith(UnsupportedOperationException::class) {
@@ -42,6 +55,19 @@ class IModelSuspendRepositoryTest {
         assertEquals(
             listOf(ModelTest(1, "test")),
             repository.list(1, 0, Unit)
+        )
+    }
+
+    @Test
+    fun testListLimitOffsetNullContext() = runBlocking {
+        val repository = object : IModelSuspendRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override suspend fun list(limit: Long, offset: Long, context: IContext?): List<ModelTest> {
+                return listOf(ModelTest(1, "test"))
+            }
+        }
+        assertEquals(
+            listOf(ModelTest(1, "test")),
+            repository.list(1, 0)
         )
     }
 
@@ -67,6 +93,19 @@ class IModelSuspendRepositoryTest {
     }
 
     @Test
+    fun testGetNullContext() = runBlocking {
+        val repository = object : IModelSuspendRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override suspend fun get(id: Long, context: IContext?): ModelTest {
+                return ModelTest(1, "test")
+            }
+        }
+        assertEquals(
+            ModelTest(1, "test"),
+            repository.get(1)
+        )
+    }
+
+    @Test
     fun testGetUnsupported(): Unit = runBlocking {
         val repository = object : IModelSuspendRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {}
         assertFailsWith(UnsupportedOperationException::class) {
@@ -84,6 +123,19 @@ class IModelSuspendRepositoryTest {
         assertEquals(
             ModelTest(1, "test"),
             repository.create(CreatePayloadTest("test"), Unit)
+        )
+    }
+
+    @Test
+    fun testCreateNullContext() = runBlocking {
+        val repository = object : IModelSuspendRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override suspend fun create(payload: CreatePayloadTest, context: IContext?): ModelTest {
+                return ModelTest(1, payload.value)
+            }
+        }
+        assertEquals(
+            ModelTest(1, "test"),
+            repository.create(CreatePayloadTest("test"))
         )
     }
 
@@ -109,6 +161,19 @@ class IModelSuspendRepositoryTest {
     }
 
     @Test
+    fun testUpdateNullContext() = runBlocking {
+        val repository = object : IModelSuspendRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override suspend fun update(id: Long, payload: UpdatePayloadTest, context: IContext?): Boolean {
+                return true
+            }
+        }
+        assertEquals(
+            true,
+            repository.update(1, UpdatePayloadTest("test"))
+        )
+    }
+
+    @Test
     fun testUpdateUnsupported(): Unit = runBlocking {
         val repository = object : IModelSuspendRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {}
         assertFailsWith(UnsupportedOperationException::class) {
@@ -126,6 +191,19 @@ class IModelSuspendRepositoryTest {
         assertEquals(
             true,
             repository.delete(1, Unit)
+        )
+    }
+
+    @Test
+    fun testDeleteNullContext() = runBlocking {
+        val repository = object : IModelSuspendRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override suspend fun delete(id: Long, context: IContext?): Boolean {
+                return true
+            }
+        }
+        assertEquals(
+            true,
+            repository.delete(1)
         )
     }
 

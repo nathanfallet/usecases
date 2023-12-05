@@ -24,6 +24,19 @@ class IModelRepositoryTest {
     }
 
     @Test
+    fun testListNullContext() {
+        val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override fun list(context: IContext?): List<ModelTest> {
+                return listOf(ModelTest(1, "test"))
+            }
+        }
+        assertEquals(
+            listOf(ModelTest(1, "test")),
+            repository.list()
+        )
+    }
+
+    @Test
     fun testListUnsupported() {
         val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {}
         assertFailsWith(UnsupportedOperationException::class) {
@@ -41,6 +54,19 @@ class IModelRepositoryTest {
         assertEquals(
             listOf(ModelTest(1, "test")),
             repository.list(1, 0, Unit)
+        )
+    }
+
+    @Test
+    fun testListLimitOffsetNullContext() {
+        val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override fun list(limit: Long, offset: Long, context: IContext?): List<ModelTest> {
+                return listOf(ModelTest(1, "test"))
+            }
+        }
+        assertEquals(
+            listOf(ModelTest(1, "test")),
+            repository.list(1, 0)
         )
     }
 
@@ -66,6 +92,19 @@ class IModelRepositoryTest {
     }
 
     @Test
+    fun testGetNullContext() {
+        val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override fun get(id: Long, context: IContext?): ModelTest {
+                return ModelTest(1, "test")
+            }
+        }
+        assertEquals(
+            ModelTest(1, "test"),
+            repository.get(1)
+        )
+    }
+
+    @Test
     fun testGetUnsupported() {
         val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {}
         assertFailsWith(UnsupportedOperationException::class) {
@@ -83,6 +122,19 @@ class IModelRepositoryTest {
         assertEquals(
             ModelTest(1, "test"),
             repository.create(CreatePayloadTest("test"), Unit)
+        )
+    }
+
+    @Test
+    fun testCreateNullContext() {
+        val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override fun create(payload: CreatePayloadTest, context: IContext?): ModelTest {
+                return ModelTest(1, payload.value)
+            }
+        }
+        assertEquals(
+            ModelTest(1, "test"),
+            repository.create(CreatePayloadTest("test"))
         )
     }
 
@@ -108,6 +160,19 @@ class IModelRepositoryTest {
     }
 
     @Test
+    fun testUpdateNullContext() {
+        val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override fun update(id: Long, payload: UpdatePayloadTest, context: IContext?): Boolean {
+                return true
+            }
+        }
+        assertEquals(
+            true,
+            repository.update(1, UpdatePayloadTest("test"))
+        )
+    }
+
+    @Test
     fun testUpdateUnsupported() {
         val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {}
         assertFailsWith(UnsupportedOperationException::class) {
@@ -125,6 +190,19 @@ class IModelRepositoryTest {
         assertEquals(
             true,
             repository.delete(1, Unit)
+        )
+    }
+
+    @Test
+    fun testDeleteNullContext() {
+        val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override fun delete(id: Long, context: IContext?): Boolean {
+                return true
+            }
+        }
+        assertEquals(
+            true,
+            repository.delete(1)
         )
     }
 
