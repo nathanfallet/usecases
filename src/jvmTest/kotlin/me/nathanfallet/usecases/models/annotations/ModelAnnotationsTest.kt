@@ -1,5 +1,6 @@
 package me.nathanfallet.usecases.models.annotations
 
+import kotlinx.datetime.*
 import me.nathanfallet.usecases.models.mock.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -48,6 +49,7 @@ class ModelAnnotationsTest {
 
     @Test
     fun testConstructPayload() {
+        val now = Clock.System.now()
         assertEquals(
             ConstructPayloadTest(
                 1,
@@ -61,7 +63,13 @@ class ModelAnnotationsTest {
                 'a',
                 9.0f,
                 10.0,
-                "hello world!"
+                "hello world!",
+                now,
+                now.toLocalDateTime(TimeZone.UTC),
+                now.toLocalDateTime(TimeZone.UTC).date,
+                now.toLocalDateTime(TimeZone.UTC).time,
+                Month.JANUARY,
+                DayOfWeek.MONDAY
             ),
             ModelAnnotations.constructPayloadFromStrings(
                 ConstructPayloadTest::class,
@@ -77,7 +85,13 @@ class ModelAnnotationsTest {
                     "char" to "a",
                     "float" to "9.0",
                     "double" to "10.0",
-                    "string" to "hello world!"
+                    "string" to "hello world!",
+                    "instant" to now.toString(),
+                    "localDateTime" to now.toLocalDateTime(TimeZone.UTC).toString(),
+                    "localDate" to now.toLocalDateTime(TimeZone.UTC).date.toString(),
+                    "localTime" to now.toLocalDateTime(TimeZone.UTC).time.toString(),
+                    "month" to Month.JANUARY.toString(),
+                    "dayOfWeek" to DayOfWeek.MONDAY.toString()
                 )
             )
         )
@@ -85,6 +99,7 @@ class ModelAnnotationsTest {
 
     @Test
     fun testConstructPayloadOptionals() {
+        val now = Clock.System.now()
         assertEquals(
             ConstructPayloadOptionalTest(
                 1,
@@ -98,7 +113,13 @@ class ModelAnnotationsTest {
                 'a',
                 9.0f,
                 10.0,
-                "hello world!"
+                "hello world!",
+                now,
+                now.toLocalDateTime(TimeZone.UTC),
+                now.toLocalDateTime(TimeZone.UTC).date,
+                now.toLocalDateTime(TimeZone.UTC).time,
+                Month.JANUARY,
+                DayOfWeek.MONDAY
             ),
             ModelAnnotations.constructPayloadFromStrings(
                 ConstructPayloadOptionalTest::class,
@@ -114,7 +135,13 @@ class ModelAnnotationsTest {
                     "char" to "a",
                     "float" to "9.0",
                     "double" to "10.0",
-                    "string" to "hello world!"
+                    "string" to "hello world!",
+                    "instant" to now.toString(),
+                    "localDateTime" to now.toLocalDateTime(TimeZone.UTC).toString(),
+                    "localDate" to now.toLocalDateTime(TimeZone.UTC).date.toString(),
+                    "localTime" to now.toLocalDateTime(TimeZone.UTC).time.toString(),
+                    "month" to Month.JANUARY.toString(),
+                    "dayOfWeek" to DayOfWeek.MONDAY.toString()
                 )
             )
         )
@@ -122,6 +149,7 @@ class ModelAnnotationsTest {
 
     @Test
     fun testConstructPayloadLists() {
+        val now = Clock.System.now()
         assertEquals(
             ConstructPayloadListTest(
                 listOf(1),
@@ -135,7 +163,13 @@ class ModelAnnotationsTest {
                 listOf('a'),
                 listOf(9.0f),
                 listOf(10.0),
-                listOf("hello world!")
+                listOf("hello world!"),
+                listOf(now),
+                listOf(now.toLocalDateTime(TimeZone.UTC)),
+                listOf(now.toLocalDateTime(TimeZone.UTC).date),
+                listOf(now.toLocalDateTime(TimeZone.UTC).time),
+                listOf(Month.JANUARY),
+                listOf(DayOfWeek.MONDAY)
             ),
             ModelAnnotations.constructPayloadFromStringLists(
                 ConstructPayloadListTest::class,
@@ -151,7 +185,13 @@ class ModelAnnotationsTest {
                     "char" to listOf("a"),
                     "float" to listOf("9.0"),
                     "double" to listOf("10.0"),
-                    "string" to listOf("hello world!")
+                    "string" to listOf("hello world!"),
+                    "instant" to listOf(now.toString()),
+                    "localDateTime" to listOf(now.toLocalDateTime(TimeZone.UTC).toString()),
+                    "localDate" to listOf(now.toLocalDateTime(TimeZone.UTC).date.toString()),
+                    "localTime" to listOf(now.toLocalDateTime(TimeZone.UTC).time.toString()),
+                    "month" to listOf(Month.JANUARY.toString()),
+                    "dayOfWeek" to listOf(DayOfWeek.MONDAY.toString())
                 )
             )
         )

@@ -1,5 +1,7 @@
 package me.nathanfallet.usecases.models.mock
 
+import kotlinx.datetime.*
+
 data class ConstructPayloadOptionalTest(
     val byte: Byte? = null,
     val uByte: UByte? = null,
@@ -12,6 +14,11 @@ data class ConstructPayloadOptionalTest(
     val char: Char? = null,
     val float: Float? = null,
     val double: Double? = null,
-    val string: String? = null
+    val string: String? = null,
+    val instant: Instant? = null,
+    val localDateTime: LocalDateTime? = null,
+    val localDate: LocalDate? = null,
+    val localTime: LocalTime? = null,
+    val month: Month? = null,
+    val dayOfWeek: DayOfWeek? = null,
 )
-
