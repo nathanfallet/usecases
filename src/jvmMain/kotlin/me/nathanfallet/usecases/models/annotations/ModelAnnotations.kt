@@ -1,5 +1,6 @@
 package me.nathanfallet.usecases.models.annotations
 
+import kotlinx.datetime.*
 import me.nathanfallet.usecases.models.IChildModel
 import kotlin.reflect.KCallable
 import kotlin.reflect.KClass
@@ -32,7 +33,7 @@ object ModelAnnotations {
 
     fun <Model : IChildModel<*, *, UpdatePayload, *>, UpdatePayload : Any> updatePayloadKeys(
         modelClass: KClass<Model>,
-        updatePayloadClass: KClass<UpdatePayload>
+        updatePayloadClass: KClass<UpdatePayload>,
     ): List<PayloadKey> {
         return getAnnotatedMembersSorted<ModelProperty>(modelClass).mapNotNull { (member, a) ->
             val annotation = a.takeIf { it.visibleOnUpdate } ?: return@mapNotNull null
@@ -44,7 +45,7 @@ object ModelAnnotations {
 
     fun <Model : IChildModel<*, CreatePayload, *, *>, CreatePayload : Any> createPayloadKeys(
         modelClass: KClass<Model>,
-        createPayloadClass: KClass<CreatePayload>
+        createPayloadClass: KClass<CreatePayload>,
     ): List<PayloadKey> {
         return getAnnotatedMembersSorted<PayloadProperty>(createPayloadClass).map { (member, annotation) ->
             PayloadKey(member.name, annotation.type, annotation.style, true)
@@ -68,13 +69,19 @@ object ModelAnnotations {
             typeOf<Boolean>() -> !listOf("false", null).contains(value)
             typeOf<Boolean?>() -> value?.let { b -> b != "false" }
             typeOf<String>(), typeOf<String?>() -> value
+            typeOf<Instant>(), typeOf<Instant?>() -> value?.toInstant()
+            typeOf<LocalDateTime>(), typeOf<LocalDateTime?>() -> value?.toLocalDateTime()
+            typeOf<LocalDate>(), typeOf<LocalDate?>() -> value?.toLocalDate()
+            typeOf<LocalTime>(), typeOf<LocalTime?>() -> value?.toLocalTime()
+            typeOf<Month>(), typeOf<Month?>() -> value?.let { Month.valueOf(it) }
+            typeOf<DayOfWeek>(), typeOf<DayOfWeek?>() -> value?.let { DayOfWeek.valueOf(it) }
             else -> null
         } as Output?
     }
 
     fun <Output : Any> constructPayloadFromStringLists(
         type: KClass<Output>,
-        stringValues: Map<String, List<String>>
+        stringValues: Map<String, List<String>>,
     ): Output? {
         val constructor = type.constructors.firstOrNull {
             it.parameters.all { parameter ->
