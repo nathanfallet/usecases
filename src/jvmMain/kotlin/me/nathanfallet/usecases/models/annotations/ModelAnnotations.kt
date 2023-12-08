@@ -27,12 +27,14 @@ object ModelAnnotations {
         }
     }
 
+    @JvmStatic
     fun <Model : IChildModel<*, *, *, *>> modelKeys(modelClass: KClass<Model>): List<ModelKey> {
         return getAnnotatedMembersSorted<ModelProperty>(modelClass).map { (member, annotation) ->
             ModelKey(member.name, annotation.type, annotation.style)
         }
     }
 
+    @JvmStatic
     fun <Model : IChildModel<*, *, UpdatePayload, *>, UpdatePayload : Any> updatePayloadKeys(
         modelClass: KClass<Model>,
         updatePayloadClass: KClass<UpdatePayload>,
@@ -45,6 +47,7 @@ object ModelAnnotations {
         }
     }
 
+    @JvmStatic
     fun <Model : IChildModel<*, CreatePayload, *, *>, CreatePayload : Any> createPayloadKeys(
         modelClass: KClass<Model>,
         createPayloadClass: KClass<CreatePayload>,
@@ -81,6 +84,7 @@ object ModelAnnotations {
         } as Output?
     }
 
+    @JvmStatic
     fun <Output : Any> constructPayloadFromStringLists(
         type: KClass<Output>,
         stringValues: Map<String, List<String>>,
@@ -106,16 +110,19 @@ object ModelAnnotations {
         return constructor.callBy(params)
     }
 
+    @JvmStatic
     fun <Output : Any> constructPayloadFromStrings(type: KClass<Output>, stringValues: Map<String, String>): Output? {
         return constructPayloadFromStringLists(type, stringValues.mapValues { listOf(it.value) })
     }
 
+    @JvmStatic
     fun <Model : IChildModel<Id, *, *, *>, Id> constructIdFromString(modelClass: KClass<Model>, id: String): Id {
         val idType = modelClass.members.first { it.name == "id" }.returnType
         return constructPrimitiveFromString(idType, id)
             ?: throw IllegalArgumentException("Unsupported id type: $idType")
     }
 
+    @JvmStatic
     fun <Payload : Any> validatePayload(payload: Payload, type: KClass<Payload>): Boolean {
         return type.declaredMemberProperties.all { member ->
             val value = member.call(payload) ?: return@all true

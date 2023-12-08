@@ -13,7 +13,7 @@ UseCase utils for all my libs.
 Add dependency to your `build.gradle` or `pom.xml`:
 
 ```groovy
-compile 'me.nathanfallet.usecases:usecases:1.5.0'
+compile 'me.nathanfallet.usecases:usecases:1.5.1'
 ```
 
 ```xml
@@ -21,7 +21,7 @@ compile 'me.nathanfallet.usecases:usecases:1.5.0'
 <dependency>
     <groupId>me.nathanfallet.usecases</groupId>
     <artifactId>usecases-jvm</artifactId>
-    <version>1.5.0</version>
+    <version>1.5.1</version>
 </dependency>
 ```
 
@@ -42,12 +42,10 @@ yarn add usecases-kt
 Create a new class that extends `IUseCase` or `ISuspendUseCase`:
 
 ```kotlin
-// IMyUseCase.kt
 interface IMyUseCase : IUseCase<Input, Output>
 ```
 
 ```kotlin
-// MyUseCase.kt
 class MyUseCase(
     private val dependency1: Dependency1,
     // ...
@@ -68,12 +66,10 @@ class MyUseCase(
 Then, you can use it like this: (example with Koin, but you can use any DI library, or even instantiate it manually)
 
 ```kotlin
-// Koin.kt
 single<IMyUseCase> { MyUseCase(get(), /*...*/) }
 ```
 
 ```kotlin
-// Somewhere else
 val useCase = get<IMyUseCase>()
 val output = useCase(Input())
 ```
@@ -93,7 +89,6 @@ A common use of UseCases is to make things with a model. That's why we made an i
 UseCases:
 
 ```kotlin
-// MyModel.kt
 data class MyModel(
     override val id: Long,
     val property1: String,
@@ -102,7 +97,6 @@ data class MyModel(
 ```
 
 ```kotlin
-// CreateMyModelPayload.kt
 data class CreateMyModelPayload(
     val property1: String,
     // ...
@@ -110,7 +104,6 @@ data class CreateMyModelPayload(
 ```
 
 ```kotlin
-// UpdateMyModelPayload.kt
 data class UpdateMyModelPayload(
     val property1: String?,
     // ...
@@ -161,19 +154,23 @@ class MyModelRepository(
     // ...
 ) : IModelRepository<MyModelRepository, MyModel, Long, CreateMyModelPayload, UpdateMyModelPayload> {
 
-    override fun get(id: Id): Model? {
+    override fun list(context: IContext?): Model? {
         /* ... */
     }
 
-    override fun create(payload: CreatePayload): Model? {
+    override fun get(id: Id, context: IContext?): Model? {
         /* ... */
     }
 
-    override fun update(id: Id, payload: UpdatePayload): Boolean {
+    override fun create(payload: CreatePayload, context: IContext?): Model? {
         /* ... */
     }
 
-    override fun delete(id: Id): Boolean {
+    override fun update(id: Id, payload: UpdatePayload, context: IContext?): Boolean {
+        /* ... */
+    }
+
+    override fun delete(id: Id, context: IContext?): Boolean {
         /* ... */
     }
 
