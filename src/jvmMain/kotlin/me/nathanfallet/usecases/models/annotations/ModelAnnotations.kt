@@ -123,11 +123,11 @@ object ModelAnnotations {
     }
 
     @JvmStatic
-    fun <Payload : Any> validatePayload(payload: Payload, type: KClass<Payload>): Boolean {
-        return type.declaredMemberProperties.all { member ->
-            val value = member.call(payload) ?: return@all true
-            member.annotations.all { annotation ->
-                PropertyValidator.validate(value, annotation)
+    fun <Payload : Any> validatePayload(payload: Payload, type: KClass<Payload>) {
+        return type.declaredMemberProperties.forEach { member ->
+            val value = member.call(payload) ?: return@forEach
+            member.annotations.forEach { annotation ->
+                PropertyValidator.validate(member.name, value, annotation)
             }
         }
     }

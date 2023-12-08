@@ -1,8 +1,12 @@
 package me.nathanfallet.usecases.models.annotations
 
 import kotlinx.datetime.*
+import me.nathanfallet.usecases.models.annotations.validators.PropertyValidatorException
+import me.nathanfallet.usecases.models.annotations.validators.StringPropertyValidator
 import me.nathanfallet.usecases.models.mock.*
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class ModelAnnotationsTest {
 
@@ -329,12 +333,18 @@ class ModelAnnotationsTest {
 
     @Test
     fun testValidatePayload() {
-        assertTrue(ModelAnnotations.validatePayload(ValidatedCreatePayload("hello"), ValidatedCreatePayload::class))
+        ModelAnnotations.validatePayload(ValidatedCreatePayload("hello"), ValidatedCreatePayload::class)
     }
 
     @Test
     fun testValidatePayloadFails() {
-        assertFalse(ModelAnnotations.validatePayload(ValidatedCreatePayload("0"), ValidatedCreatePayload::class))
+        val exception = assertFailsWith<PropertyValidatorException> {
+            ModelAnnotations.validatePayload(ValidatedCreatePayload("h"), ValidatedCreatePayload::class)
+        }
+        assertEquals("name", exception.key)
+        assertEquals("h", exception.value)
+        assertEquals(StringPropertyValidator(minLength = 3), exception.validator)
+        assertEquals("minLength", exception.reason)
     }
 
 }
