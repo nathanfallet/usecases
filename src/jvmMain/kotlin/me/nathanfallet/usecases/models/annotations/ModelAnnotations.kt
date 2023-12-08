@@ -2,9 +2,11 @@ package me.nathanfallet.usecases.models.annotations
 
 import kotlinx.datetime.*
 import me.nathanfallet.usecases.models.IChildModel
+import me.nathanfallet.usecases.models.annotations.validators.PropertyValidator
 import kotlin.reflect.KCallable
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
+import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.typeOf
 
@@ -112,6 +114,15 @@ object ModelAnnotations {
         val idType = modelClass.members.first { it.name == "id" }.returnType
         return constructPrimitiveFromString(idType, id)
             ?: throw IllegalArgumentException("Unsupported id type: $idType")
+    }
+
+    fun <Payload : Any> validatePayload(payload: Payload, type: KClass<Payload>): Boolean {
+        return type.declaredMemberProperties.all { member ->
+            val value = member.call(payload) ?: return@all true
+            member.annotations.all { annotation ->
+                PropertyValidator.validate(value, annotation)
+            }
+        }
     }
 
 }
