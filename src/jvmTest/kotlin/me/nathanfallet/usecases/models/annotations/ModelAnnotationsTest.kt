@@ -2,9 +2,7 @@ package me.nathanfallet.usecases.models.annotations
 
 import kotlinx.datetime.*
 import me.nathanfallet.usecases.models.mock.*
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
+import kotlin.test.*
 
 class ModelAnnotationsTest {
 
@@ -327,6 +325,16 @@ class ModelAnnotationsTest {
             )
         }
         assertEquals("Unsupported id type: kotlin.Unit", exception.message)
+    }
+
+    @Test
+    fun testValidatePayload() {
+        assertTrue(ModelAnnotations.validatePayload(ValidatedCreatePayload("hello"), ValidatedCreatePayload::class))
+    }
+
+    @Test
+    fun testValidatePayloadFails() {
+        assertFalse(ModelAnnotations.validatePayload(ValidatedCreatePayload("0"), ValidatedCreatePayload::class))
     }
 
 }
