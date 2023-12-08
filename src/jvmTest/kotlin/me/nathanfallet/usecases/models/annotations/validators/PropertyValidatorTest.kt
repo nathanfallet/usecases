@@ -1,44 +1,70 @@
 package me.nathanfallet.usecases.models.annotations.validators
 
 import kotlin.test.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class PropertyValidatorTest {
 
     @Test
     fun testValidateStringDefault() {
-        assertTrue(PropertyValidator.validate("test", StringPropertyValidator()))
+        PropertyValidator.validate("key", "test", StringPropertyValidator())
     }
 
     @Test
     fun testValidateStringRegexMatching() {
-        assertTrue(PropertyValidator.validate("abc123", StringPropertyValidator(regex = "[a-z]+[0-9]+")))
+        PropertyValidator.validate("key", "abc123", StringPropertyValidator(regex = "[a-z]+[0-9]+"))
     }
 
     @Test
     fun testValidateStringRegexNotMatching() {
-        assertFalse(PropertyValidator.validate("123abc", StringPropertyValidator(regex = "[a-z]+[0-9]+")))
+        val exception = assertFailsWith<PropertyValidatorException> {
+            PropertyValidator.validate("key", "123abc", StringPropertyValidator(regex = "[a-z]+[0-9]+"))
+        }
+        assertEquals("key", exception.key)
+        assertEquals("123abc", exception.value)
+        assertEquals(StringPropertyValidator(regex = "[a-z]+[0-9]+"), exception.validator)
+        assertEquals("regex", exception.reason)
     }
 
     @Test
     fun testValidateStringMinLengthMatching() {
-        assertTrue(PropertyValidator.validate("test", StringPropertyValidator(minLength = 4)))
+        PropertyValidator.validate("key", "test", StringPropertyValidator(minLength = 4))
     }
 
     @Test
     fun testValidateStringMinLengthNotMatching() {
-        assertFalse(PropertyValidator.validate("test", StringPropertyValidator(minLength = 5)))
+        val exception = assertFailsWith<PropertyValidatorException> {
+            PropertyValidator.validate(
+                "key",
+                "test",
+                StringPropertyValidator(minLength = 5)
+            )
+        }
+        assertEquals("key", exception.key)
+        assertEquals("test", exception.value)
+        assertEquals(StringPropertyValidator(minLength = 5), exception.validator)
+        assertEquals("minLength", exception.reason)
     }
 
     @Test
     fun testValidateStringMaxLengthMatching() {
-        assertTrue(PropertyValidator.validate("test", StringPropertyValidator(maxLength = 4)))
+        PropertyValidator.validate("key", "test", StringPropertyValidator(maxLength = 4))
     }
 
     @Test
     fun testValidateStringMaxLengthNotMatching() {
-        assertFalse(PropertyValidator.validate("test", StringPropertyValidator(maxLength = 3)))
+        val exception = assertFailsWith<PropertyValidatorException> {
+            PropertyValidator.validate(
+                "key",
+                "test",
+                StringPropertyValidator(maxLength = 3)
+            )
+        }
+        assertEquals("key", exception.key)
+        assertEquals("test", exception.value)
+        assertEquals(StringPropertyValidator(maxLength = 3), exception.validator)
+        assertEquals("maxLength", exception.reason)
     }
 
 }
