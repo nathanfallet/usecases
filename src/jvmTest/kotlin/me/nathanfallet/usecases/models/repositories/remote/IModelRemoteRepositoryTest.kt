@@ -152,12 +152,12 @@ class IModelRemoteRepositoryTest {
     @Test
     fun testUpdate() = runBlocking {
         val repository = object : IModelRemoteRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
-            override suspend fun update(id: Long, payload: UpdatePayloadTest, context: IContext?): Boolean {
-                return true
+            override suspend fun update(id: Long, payload: UpdatePayloadTest, context: IContext?): ModelTest? {
+                return ModelTest(1, payload.value)
             }
         }
         assertEquals(
-            true,
+            ModelTest(1, "test"),
             repository.update(1, UpdatePayloadTest("test"), RecursiveId<UnitModel, Unit, Unit>(Unit))
         )
     }
@@ -165,12 +165,12 @@ class IModelRemoteRepositoryTest {
     @Test
     fun testUpdateNullContext() = runBlocking {
         val repository = object : IModelRemoteRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
-            override suspend fun update(id: Long, payload: UpdatePayloadTest, context: IContext?): Boolean {
-                return true
+            override suspend fun update(id: Long, payload: UpdatePayloadTest, context: IContext?): ModelTest? {
+                return ModelTest(1, payload.value)
             }
         }
         assertEquals(
-            true,
+            ModelTest(1, "test"),
             repository.update(1, UpdatePayloadTest("test"))
         )
     }

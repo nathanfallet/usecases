@@ -23,7 +23,7 @@ interface IModelRemoteRepository<Model : IModel<Id, CreatePayload, UpdatePayload
         throw UnsupportedOperationException()
     }
 
-    suspend fun update(id: Id, payload: UpdatePayload, context: IContext? = null): Boolean {
+    suspend fun update(id: Id, payload: UpdatePayload, context: IContext? = null): Model? {
         throw UnsupportedOperationException()
     }
 
@@ -58,7 +58,7 @@ interface IModelRemoteRepository<Model : IModel<Id, CreatePayload, UpdatePayload
         payload: UpdatePayload,
         parentId: RecursiveId<*, Unit, *>,
         context: IContext?,
-    ): Boolean {
+    ): Model? {
         return update(id, payload, context)
     }
 
