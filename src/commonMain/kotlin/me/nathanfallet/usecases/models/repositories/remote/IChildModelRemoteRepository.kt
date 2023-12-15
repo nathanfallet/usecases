@@ -36,7 +36,7 @@ interface IChildModelRemoteRepository<Model : IChildModel<Id, CreatePayload, Upd
         payload: UpdatePayload,
         parentId: RecursiveId<*, ParentId, *>,
         context: IContext? = null,
-    ): Boolean {
+    ): Model? {
         throw UnsupportedOperationException()
     }
 
