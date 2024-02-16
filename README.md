@@ -13,7 +13,7 @@ UseCase utils for all my libs.
 Add dependency to your `build.gradle(.kts)` or `pom.xml`:
 
 ```kotlin
-api("me.nathanfallet.usecases:usecases:1.5.5")
+api("me.nathanfallet.usecases:usecases:1.5.6")
 ```
 
 ```xml
@@ -21,7 +21,7 @@ api("me.nathanfallet.usecases:usecases:1.5.5")
 <dependency>
     <groupId>me.nathanfallet.usecases</groupId>
     <artifactId>usecases-jvm</artifactId>
-    <version>1.5.5</version>
+    <version>1.5.6</version>
 </dependency>
 ```
 
