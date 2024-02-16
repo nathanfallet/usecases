@@ -12,8 +12,8 @@ import kotlin.reflect.typeOf
 
 object ModelAnnotations {
 
-    private inline fun <reified O : Annotation> getAnnotatedMembersSorted(kClass: KClass<*>): List<Pair<KCallable<*>, O>> {
-        return kClass.members.mapNotNull { member ->
+    private inline fun <reified O : Annotation> getAnnotatedMembersSorted(kClass: KClass<*>): List<Pair<KCallable<*>, O>> =
+        kClass.members.mapNotNull { member ->
             val annotation = member.annotations.firstNotNullOfOrNull {
                 it as? O
             } ?: return@mapNotNull null
@@ -25,41 +25,38 @@ object ModelAnnotations {
                 }
             }?.parameters?.indexOfFirst { it.name == member.name }
         }
-    }
 
     @JvmStatic
-    fun <Model : IChildModel<*, *, *, *>> modelKeys(modelClass: KClass<Model>): List<ModelKey> {
-        return getAnnotatedMembersSorted<ModelProperty>(modelClass).map { (member, annotation) ->
+    fun <Model : IChildModel<*, *, *, *>> modelKeys(modelClass: KClass<Model>): List<ModelKey> =
+        getAnnotatedMembersSorted<ModelProperty>(modelClass).map { (member, annotation) ->
             ModelKey(member.name, annotation.type, annotation.style)
         }
-    }
 
     @JvmStatic
     fun <Model : IChildModel<*, *, UpdatePayload, *>, UpdatePayload : Any> updatePayloadKeys(
         modelClass: KClass<Model>,
         updatePayloadClass: KClass<UpdatePayload>,
-    ): List<PayloadKey> {
-        return getAnnotatedMembersSorted<ModelProperty>(modelClass).mapNotNull { (member, a) ->
+    ): List<PayloadKey> =
+        getAnnotatedMembersSorted<ModelProperty>(modelClass).mapNotNull { (member, a) ->
             val annotation = a.takeIf { it.visibleOnUpdate } ?: return@mapNotNull null
             PayloadKey(member.name, annotation.type, annotation.style, false)
         } + getAnnotatedMembersSorted<PayloadProperty>(updatePayloadClass).map { (member, annotation) ->
             PayloadKey(member.name, annotation.type, annotation.style, true)
         }
-    }
 
     @JvmStatic
     fun <Model : IChildModel<*, CreatePayload, *, *>, CreatePayload : Any> createPayloadKeys(
         modelClass: KClass<Model>,
         createPayloadClass: KClass<CreatePayload>,
-    ): List<PayloadKey> {
-        return getAnnotatedMembersSorted<PayloadProperty>(createPayloadClass).map { (member, annotation) ->
+    ): List<PayloadKey> =
+        getAnnotatedMembersSorted<PayloadProperty>(createPayloadClass).map { (member, annotation) ->
             PayloadKey(member.name, annotation.type, annotation.style, true)
         }
-    }
 
+    @JvmStatic
     @Suppress("UNCHECKED_CAST")
-    private fun <Output : Any> constructPrimitiveFromString(type: KType, value: String?): Output? {
-        return when (type) {
+    fun <Output : Any> constructPrimitiveFromString(type: KType, value: String?): Output? =
+        when (type) {
             typeOf<Byte>(), typeOf<Byte?>() -> value?.toByteOrNull()
             typeOf<UByte>(), typeOf<UByte?>() -> value?.toUByteOrNull()
             typeOf<Short>(), typeOf<Short?>() -> value?.toShortOrNull()
@@ -81,8 +78,7 @@ object ModelAnnotations {
             typeOf<Month>(), typeOf<Month?>() -> value?.let { Month.valueOf(it) }
             typeOf<DayOfWeek>(), typeOf<DayOfWeek?>() -> value?.let { DayOfWeek.valueOf(it) }
             else -> null
-        } as Output?
-    }
+        } as? Output?
 
     @JvmStatic
     fun <Output : Any> constructPayloadFromStringLists(
@@ -111,9 +107,10 @@ object ModelAnnotations {
     }
 
     @JvmStatic
-    fun <Output : Any> constructPayloadFromStrings(type: KClass<Output>, stringValues: Map<String, String>): Output? {
-        return constructPayloadFromStringLists(type, stringValues.mapValues { listOf(it.value) })
-    }
+    fun <Payload : Any> constructPayloadFromStrings(
+        type: KClass<Payload>,
+        stringValues: Map<String, String>,
+    ): Payload? = constructPayloadFromStringLists(type, stringValues.mapValues { listOf(it.value) })
 
     @JvmStatic
     fun <Model : IChildModel<Id, *, *, *>, Id> constructIdFromString(modelClass: KClass<Model>, id: String): Id {
@@ -123,13 +120,12 @@ object ModelAnnotations {
     }
 
     @JvmStatic
-    fun <Payload : Any> validatePayload(payload: Payload, type: KClass<Payload>) {
-        return type.declaredMemberProperties.forEach { member ->
+    fun <Payload : Any> validatePayload(payload: Payload, type: KClass<Payload>) =
+        type.declaredMemberProperties.forEach { member ->
             val value = member.call(payload) ?: return@forEach
             member.annotations.forEach { annotation ->
                 PropertyValidator.validate(member.name, value, annotation)
             }
         }
-    }
 
 }

@@ -4,6 +4,7 @@ import kotlinx.datetime.*
 import me.nathanfallet.usecases.models.annotations.validators.PropertyValidatorException
 import me.nathanfallet.usecases.models.annotations.validators.StringPropertyValidator
 import me.nathanfallet.usecases.models.mock.*
+import kotlin.reflect.typeOf
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -329,6 +330,17 @@ class ModelAnnotationsTest {
             )
         }
         assertEquals("Unsupported id type: kotlin.Unit", exception.message)
+    }
+
+    @Test
+    fun testConstructPrimitive() {
+        assertEquals(
+            1,
+            ModelAnnotations.constructPrimitiveFromString(
+                typeOf<Int>(),
+                "1"
+            )
+        )
     }
 
     @Test
