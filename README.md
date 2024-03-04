@@ -13,7 +13,7 @@ UseCase utils for all my libs.
 Add dependency to your `build.gradle(.kts)` or `pom.xml`:
 
 ```kotlin
-api("me.nathanfallet.usecases:usecases:1.5.6")
+api("me.nathanfallet.usecases:usecases:1.6.0")
 ```
 
 ```xml
@@ -21,7 +21,7 @@ api("me.nathanfallet.usecases:usecases:1.5.6")
 <dependency>
     <groupId>me.nathanfallet.usecases</groupId>
     <artifactId>usecases-jvm</artifactId>
-    <version>1.5.6</version>
+    <version>1.6.0</version>
 </dependency>
 ```
 
@@ -166,7 +166,7 @@ class MyModelRepository(
         /* ... */
     }
 
-    override fun list(limit: Long, offset: Long, context: IContext?): Model? {
+    override fun list(pagination: Pagination, context: IContext?): Model? {
         /* ... */
     }
 
