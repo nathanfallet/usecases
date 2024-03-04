@@ -9,12 +9,9 @@ open class DeleteModelWithContextFromRepositorySuspendUseCase<Model : IModel<Id,
 ) : DeleteChildModelWithContextFromRepositorySuspendUseCase<Model, Id, Unit>(repository),
     IDeleteModelWithContextSuspendUseCase<Model, Id> {
 
-    override suspend fun invoke(input1: Id, input2: IContext): Boolean {
-        return invoke(input1, Unit, input2)
-    }
+    override suspend fun invoke(input1: Id, input2: IContext): Boolean = invoke(input1, Unit, input2)
 
-    override suspend fun invoke(input1: Id, input2: Unit, input3: IContext): Boolean {
-        return super<DeleteChildModelWithContextFromRepositorySuspendUseCase>.invoke(input1, input2, input3)
-    }
+    override suspend fun invoke(input1: Id, input2: Unit, input3: IContext): Boolean =
+        super<DeleteChildModelWithContextFromRepositorySuspendUseCase>.invoke(input1, input2, input3)
 
 }

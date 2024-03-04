@@ -11,8 +11,6 @@ interface IListModelWithContextUseCase<Model : IModel<*, *, *>> : IListChildMode
     @JsName("invokeDefault")
     operator fun invoke(input: IContext): List<Model>
 
-    override fun invoke(input1: Unit, input2: IContext): List<Model> {
-        return invoke(input2)
-    }
+    override fun invoke(input1: Unit, input2: IContext): List<Model> = invoke(input2)
 
 }

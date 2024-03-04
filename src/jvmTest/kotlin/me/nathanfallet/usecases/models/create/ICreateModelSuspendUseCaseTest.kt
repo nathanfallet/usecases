@@ -11,9 +11,7 @@ class ICreateModelSuspendUseCaseTest {
     @Test
     fun testInvoke() = runBlocking {
         val useCase = object : ICreateModelSuspendUseCase<ModelTest, CreatePayloadTest> {
-            override suspend fun invoke(input: CreatePayloadTest): ModelTest {
-                return ModelTest(1, "test")
-            }
+            override suspend fun invoke(input: CreatePayloadTest): ModelTest = ModelTest(1, "test")
         }
         assertEquals(ModelTest(1, "test"), useCase(CreatePayloadTest("test"), Unit))
     }

@@ -6,8 +6,6 @@ interface IDeleteModelSuspendUseCase<Model : IModel<Id, *, *>, Id> : IDeleteChil
 
     suspend operator fun invoke(input: Id): Boolean
 
-    override suspend fun invoke(input1: Id, input2: Unit): Boolean {
-        return invoke(input1)
-    }
+    override suspend fun invoke(input1: Id, input2: Unit): Boolean = invoke(input1)
 
 }

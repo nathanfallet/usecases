@@ -10,8 +10,6 @@ interface IGetModelUseCase<Model : IModel<Id, *, *>, Id> : IGetChildModelUseCase
     @JsName("invokeDefault")
     operator fun invoke(input: Id): Model?
 
-    override fun invoke(input1: Id, input2: Unit): Model? {
-        return invoke(input1)
-    }
+    override fun invoke(input1: Id, input2: Unit): Model? = invoke(input1)
 
 }

@@ -9,12 +9,9 @@ open class ListModelWithContextFromRepositorySuspendUseCase<Model : IModel<*, *,
 ) : ListChildModelWithContextFromRepositorySuspendUseCase<Model, Unit>(repository),
     IListModelWithContextSuspendUseCase<Model> {
 
-    override suspend fun invoke(input: IContext): List<Model> {
-        return invoke(Unit, input)
-    }
+    override suspend fun invoke(input: IContext): List<Model> = invoke(Unit, input)
 
-    override suspend fun invoke(input1: Unit, input2: IContext): List<Model> {
-        return super<ListChildModelWithContextFromRepositorySuspendUseCase>.invoke(input1, input2)
-    }
+    override suspend fun invoke(input1: Unit, input2: IContext): List<Model> =
+        super<ListChildModelWithContextFromRepositorySuspendUseCase>.invoke(input1, input2)
 
 }

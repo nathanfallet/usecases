@@ -4,15 +4,12 @@ import me.nathanfallet.usecases.models.IModel
 import me.nathanfallet.usecases.models.repositories.IModelSuspendRepository
 
 open class ListModelFromRepositorySuspendUseCase<Model : IModel<*, *, *>>(
-    repository: IModelSuspendRepository<Model, *, *, *>
+    repository: IModelSuspendRepository<Model, *, *, *>,
 ) : ListChildModelFromRepositorySuspendUseCase<Model, Unit>(repository), IListModelSuspendUseCase<Model> {
 
-    override suspend fun invoke(): List<Model> {
-        return invoke(Unit)
-    }
+    override suspend fun invoke(): List<Model> = invoke(Unit)
 
-    override suspend fun invoke(input: Unit): List<Model> {
-        return super<ListChildModelFromRepositorySuspendUseCase>.invoke(input)
-    }
+    override suspend fun invoke(input: Unit): List<Model> =
+        super<ListChildModelFromRepositorySuspendUseCase>.invoke(input)
 
 }

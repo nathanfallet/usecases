@@ -10,8 +10,6 @@ interface IDeleteModelUseCase<Model : IModel<Id, *, *>, Id> : IDeleteChildModelU
     @JsName("invokeDefault")
     operator fun invoke(input: Id): Boolean
 
-    override fun invoke(input1: Id, input2: Unit): Boolean {
-        return invoke(input1)
-    }
+    override fun invoke(input1: Id, input2: Unit): Boolean = invoke(input1)
 
 }

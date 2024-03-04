@@ -8,8 +8,6 @@ interface ICreateModelWithContextSuspendUseCase<Model : IModel<*, CreatePayload,
 
     suspend operator fun invoke(input1: CreatePayload, input2: IContext): Model?
 
-    override suspend fun invoke(input1: CreatePayload, input2: Unit, input3: IContext): Model? {
-        return invoke(input1, input3)
-    }
+    override suspend fun invoke(input1: CreatePayload, input2: Unit, input3: IContext): Model? = invoke(input1, input3)
 
 }

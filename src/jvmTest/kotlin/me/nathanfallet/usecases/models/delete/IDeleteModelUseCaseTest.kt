@@ -9,9 +9,7 @@ class IDeleteModelUseCaseTest {
     @Test
     fun testInvoke() {
         val useCase = object : IDeleteModelUseCase<ModelTest, Long> {
-            override fun invoke(input: Long): Boolean {
-                return true
-            }
+            override fun invoke(input: Long): Boolean = true
         }
         assertEquals(true, useCase(1, Unit))
     }

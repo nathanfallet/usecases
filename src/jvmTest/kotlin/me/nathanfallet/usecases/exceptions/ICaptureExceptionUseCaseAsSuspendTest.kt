@@ -1,28 +1,21 @@
 package me.nathanfallet.usecases.exceptions
 
-import io.mockative.*
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.runBlocking
-import kotlin.test.AfterTest
 import kotlin.test.Test
 
 class ICaptureExceptionUseCaseAsSuspendTest {
 
-    @Mock
-    val useCase = mock(classOf<ICaptureExceptionUseCase>())
-
-    @AfterTest
-    fun after() {
-        verifyNoUnmetExpectations(useCase)
-    }
-
     @Test
     fun invokeSuspendFromNonSuspend() = runBlocking {
+        val useCase = mockk<ICaptureExceptionUseCase>()
         val suspendUseCase = ICaptureExceptionUseCaseAsSuspend(useCase)
         val exception = Exception("test")
+        every { useCase(exception) } returns Unit
         suspendUseCase(exception)
-        coVerify {
-            useCase(exception)
-        }.wasInvoked()
+        verify { useCase(exception) }
     }
 
 }

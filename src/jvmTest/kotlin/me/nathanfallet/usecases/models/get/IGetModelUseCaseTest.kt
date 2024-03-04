@@ -9,9 +9,7 @@ class IGetModelUseCaseTest {
     @Test
     fun testInvoke() {
         val useCase = object : IGetModelUseCase<ModelTest, Long> {
-            override fun invoke(input: Long): ModelTest {
-                return ModelTest(1, "test")
-            }
+            override fun invoke(input: Long): ModelTest = ModelTest(1, "test")
         }
         assertEquals(ModelTest(1, "test"), useCase(1, Unit))
     }

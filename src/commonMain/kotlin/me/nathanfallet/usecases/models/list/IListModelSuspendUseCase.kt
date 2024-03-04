@@ -6,8 +6,6 @@ interface IListModelSuspendUseCase<Model : IModel<*, *, *>> : IListChildModelSus
 
     suspend operator fun invoke(): List<Model>
 
-    override suspend fun invoke(input: Unit): List<Model> {
-        return invoke()
-    }
+    override suspend fun invoke(input: Unit): List<Model> = invoke()
 
 }

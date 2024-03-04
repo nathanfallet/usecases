@@ -7,8 +7,6 @@ interface IUpdateModelSuspendUseCase<Model : IModel<Id, *, UpdatePayload>, Id, U
 
     suspend operator fun invoke(input1: Id, input2: UpdatePayload): Model?
 
-    override suspend fun invoke(input1: Id, input2: UpdatePayload, input3: Unit): Model? {
-        return invoke(input1, input2)
-    }
+    override suspend fun invoke(input1: Id, input2: UpdatePayload, input3: Unit): Model? = invoke(input1, input2)
 
 }

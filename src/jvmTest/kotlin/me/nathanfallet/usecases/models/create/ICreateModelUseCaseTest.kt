@@ -10,9 +10,7 @@ class ICreateModelUseCaseTest {
     @Test
     fun testInvoke() {
         val useCase = object : ICreateModelUseCase<ModelTest, CreatePayloadTest> {
-            override fun invoke(input: CreatePayloadTest): ModelTest {
-                return ModelTest(1, "test")
-            }
+            override fun invoke(input: CreatePayloadTest): ModelTest = ModelTest(1, "test")
         }
         assertEquals(ModelTest(1, "test"), useCase(CreatePayloadTest("test"), Unit))
     }

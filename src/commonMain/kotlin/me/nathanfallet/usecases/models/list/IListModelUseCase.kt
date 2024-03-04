@@ -10,8 +10,6 @@ interface IListModelUseCase<Model : IModel<*, *, *>> : IListChildModelUseCase<Mo
     @JsName("invokeDefault")
     operator fun invoke(): List<Model>
 
-    override fun invoke(input: Unit): List<Model> {
-        return invoke()
-    }
+    override fun invoke(input: Unit): List<Model> = invoke()
 
 }

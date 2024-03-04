@@ -12,8 +12,7 @@ interface IUpdateModelWithContextUseCase<Model : IModel<Id, *, UpdatePayload>, I
     @JsName("invokeDefault")
     operator fun invoke(input1: Id, input2: UpdatePayload, input3: IContext): Model?
 
-    override fun invoke(input1: Id, input2: UpdatePayload, input3: Unit, input4: IContext): Model? {
-        return invoke(input1, input2, input4)
-    }
+    override fun invoke(input1: Id, input2: UpdatePayload, input3: Unit, input4: IContext): Model? =
+        invoke(input1, input2, input4)
 
 }
