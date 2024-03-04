@@ -75,6 +75,36 @@ class IModelSuspendRepositoryTest {
     }
 
     @Test
+    fun testCount() = runBlocking {
+        val repository = object : IModelSuspendRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override suspend fun count(context: IContext?): Long = 1
+        }
+        assertEquals(
+            1,
+            repository.count(Unit)
+        )
+    }
+
+    @Test
+    fun testCountNullContext() = runBlocking {
+        val repository = object : IModelSuspendRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override suspend fun count(context: IContext?): Long = 1
+        }
+        assertEquals(
+            1,
+            repository.count()
+        )
+    }
+
+    @Test
+    fun testCountUnsupported(): Unit = runBlocking {
+        val repository = object : IModelSuspendRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {}
+        assertFailsWith(UnsupportedOperationException::class) {
+            repository.count(Unit)
+        }
+    }
+
+    @Test
     fun testGet() = runBlocking {
         val repository = object : IModelSuspendRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
             override suspend fun get(id: Long, context: IContext?): ModelTest = ModelTest(1, "test")

@@ -16,6 +16,9 @@ interface IModelRepository<Model : IModel<Id, CreatePayload, UpdatePayload>, Id,
     @JsName("listWithLimitDefault")
     fun list(pagination: Pagination, context: IContext? = null): List<Model> = throw UnsupportedOperationException()
 
+    @JsName("countDefault")
+    fun count(context: IContext? = null): Long = throw UnsupportedOperationException()
+
     @JsName("getDefault")
     fun get(id: Id, context: IContext? = null): Model? = throw UnsupportedOperationException()
 
@@ -33,6 +36,8 @@ interface IModelRepository<Model : IModel<Id, CreatePayload, UpdatePayload>, Id,
 
     override fun list(pagination: Pagination, parentId: Unit, context: IContext?): List<Model> =
         list(pagination, context)
+
+    override fun count(parentId: Unit, context: IContext?): Long = count(context)
 
     override fun get(id: Id, parentId: Unit, context: IContext?): Model? = get(id, context)
 

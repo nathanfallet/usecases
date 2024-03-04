@@ -77,6 +77,36 @@ class IModelRemoteRepositoryTest {
     }
 
     @Test
+    fun testCount() = runBlocking {
+        val repository = object : IModelRemoteRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override suspend fun count(context: IContext?): Long = 1
+        }
+        assertEquals(
+            1,
+            repository.count(RecursiveId<UnitModel, Unit, Unit>(Unit))
+        )
+    }
+
+    @Test
+    fun testCountNullContext() = runBlocking {
+        val repository = object : IModelRemoteRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override suspend fun count(context: IContext?): Long = 1
+        }
+        assertEquals(
+            1,
+            repository.count()
+        )
+    }
+
+    @Test
+    fun testCountUnsupported(): Unit = runBlocking {
+        val repository = object : IModelRemoteRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {}
+        assertFailsWith(UnsupportedOperationException::class) {
+            repository.count(RecursiveId<UnitModel, Unit, Unit>(Unit))
+        }
+    }
+
+    @Test
     fun testGet() = runBlocking {
         val repository = object : IModelRemoteRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
             override suspend fun get(id: Long, context: IContext?): ModelTest = ModelTest(1, "test")

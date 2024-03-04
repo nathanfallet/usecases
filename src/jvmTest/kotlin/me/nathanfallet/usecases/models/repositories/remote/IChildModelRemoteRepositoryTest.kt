@@ -31,6 +31,15 @@ class IChildModelRemoteRepositoryTest {
     }
 
     @Test
+    fun testCountUnsupported(): Unit = runBlocking {
+        val repository =
+            object : IChildModelRemoteRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest, Unit> {}
+        assertFailsWith(UnsupportedOperationException::class) {
+            repository.count(RecursiveId<UnitModel, Unit, Unit>(Unit))
+        }
+    }
+
+    @Test
     fun testGetUnsupported(): Unit = runBlocking {
         val repository =
             object : IChildModelRemoteRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest, Unit> {}

@@ -26,6 +26,14 @@ class IChildModelRepositoryTest {
     }
 
     @Test
+    fun testCountUnsupported() {
+        val repository = object : IChildModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest, Unit> {}
+        assertFailsWith(UnsupportedOperationException::class) {
+            repository.count(Unit)
+        }
+    }
+
+    @Test
     fun testGetUnsupported() {
         val repository = object : IChildModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest, Unit> {}
         assertFailsWith(UnsupportedOperationException::class) {

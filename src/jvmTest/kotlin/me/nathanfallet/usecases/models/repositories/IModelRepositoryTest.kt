@@ -74,6 +74,36 @@ class IModelRepositoryTest {
     }
 
     @Test
+    fun testCount() {
+        val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override fun count(context: IContext?): Long = 1
+        }
+        assertEquals(
+            1,
+            repository.count(Unit)
+        )
+    }
+
+    @Test
+    fun testCountNullContext() {
+        val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
+            override fun count(context: IContext?): Long = 1
+        }
+        assertEquals(
+            1,
+            repository.count()
+        )
+    }
+
+    @Test
+    fun testCountUnsupported() {
+        val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {}
+        assertFailsWith(UnsupportedOperationException::class) {
+            repository.count(Unit)
+        }
+    }
+
+    @Test
     fun testGet() {
         val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
             override fun get(id: Long, context: IContext?): ModelTest = ModelTest(1, "test")
