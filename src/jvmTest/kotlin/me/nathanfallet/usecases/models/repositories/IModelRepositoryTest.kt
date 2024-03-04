@@ -4,6 +4,7 @@ import me.nathanfallet.usecases.context.IContext
 import me.nathanfallet.usecases.models.mock.CreatePayloadTest
 import me.nathanfallet.usecases.models.mock.ModelTest
 import me.nathanfallet.usecases.models.mock.UpdatePayloadTest
+import me.nathanfallet.usecases.pagination.Pagination
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -13,9 +14,7 @@ class IModelRepositoryTest {
     @Test
     fun testList() {
         val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
-            override fun list(context: IContext?): List<ModelTest> {
-                return listOf(ModelTest(1, "test"))
-            }
+            override fun list(context: IContext?): List<ModelTest> = listOf(ModelTest(1, "test"))
         }
         assertEquals(
             listOf(ModelTest(1, "test")),
@@ -26,9 +25,7 @@ class IModelRepositoryTest {
     @Test
     fun testListNullContext() {
         val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
-            override fun list(context: IContext?): List<ModelTest> {
-                return listOf(ModelTest(1, "test"))
-            }
+            override fun list(context: IContext?): List<ModelTest> = listOf(ModelTest(1, "test"))
         }
         assertEquals(
             listOf(ModelTest(1, "test")),
@@ -47,26 +44,24 @@ class IModelRepositoryTest {
     @Test
     fun testListLimitOffset() {
         val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
-            override fun list(limit: Long, offset: Long, context: IContext?): List<ModelTest> {
-                return listOf(ModelTest(1, "test"))
-            }
+            override fun list(pagination: Pagination, context: IContext?): List<ModelTest> =
+                listOf(ModelTest(1, "test"))
         }
         assertEquals(
             listOf(ModelTest(1, "test")),
-            repository.list(1, 0, Unit)
+            repository.list(Pagination(1, 0), Unit)
         )
     }
 
     @Test
     fun testListLimitOffsetNullContext() {
         val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
-            override fun list(limit: Long, offset: Long, context: IContext?): List<ModelTest> {
-                return listOf(ModelTest(1, "test"))
-            }
+            override fun list(pagination: Pagination, context: IContext?): List<ModelTest> =
+                listOf(ModelTest(1, "test"))
         }
         assertEquals(
             listOf(ModelTest(1, "test")),
-            repository.list(1, 0)
+            repository.list(Pagination(1, 0))
         )
     }
 
@@ -74,16 +69,14 @@ class IModelRepositoryTest {
     fun testListLimitOffsetUnsupported() {
         val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {}
         assertFailsWith(UnsupportedOperationException::class) {
-            repository.list(1, 0, Unit)
+            repository.list(Pagination(1, 0), Unit)
         }
     }
 
     @Test
     fun testGet() {
         val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
-            override fun get(id: Long, context: IContext?): ModelTest {
-                return ModelTest(1, "test")
-            }
+            override fun get(id: Long, context: IContext?): ModelTest = ModelTest(1, "test")
         }
         assertEquals(
             ModelTest(1, "test"),
@@ -94,9 +87,7 @@ class IModelRepositoryTest {
     @Test
     fun testGetNullContext() {
         val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
-            override fun get(id: Long, context: IContext?): ModelTest {
-                return ModelTest(1, "test")
-            }
+            override fun get(id: Long, context: IContext?): ModelTest = ModelTest(1, "test")
         }
         assertEquals(
             ModelTest(1, "test"),
@@ -115,9 +106,7 @@ class IModelRepositoryTest {
     @Test
     fun testCreate() {
         val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
-            override fun create(payload: CreatePayloadTest, context: IContext?): ModelTest {
-                return ModelTest(1, payload.value)
-            }
+            override fun create(payload: CreatePayloadTest, context: IContext?): ModelTest = ModelTest(1, payload.value)
         }
         assertEquals(
             ModelTest(1, "test"),
@@ -128,9 +117,7 @@ class IModelRepositoryTest {
     @Test
     fun testCreateNullContext() {
         val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
-            override fun create(payload: CreatePayloadTest, context: IContext?): ModelTest {
-                return ModelTest(1, payload.value)
-            }
+            override fun create(payload: CreatePayloadTest, context: IContext?): ModelTest = ModelTest(1, payload.value)
         }
         assertEquals(
             ModelTest(1, "test"),
@@ -149,9 +136,7 @@ class IModelRepositoryTest {
     @Test
     fun testUpdate() {
         val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
-            override fun update(id: Long, payload: UpdatePayloadTest, context: IContext?): Boolean {
-                return true
-            }
+            override fun update(id: Long, payload: UpdatePayloadTest, context: IContext?): Boolean = true
         }
         assertEquals(
             true,
@@ -162,9 +147,7 @@ class IModelRepositoryTest {
     @Test
     fun testUpdateNullContext() {
         val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
-            override fun update(id: Long, payload: UpdatePayloadTest, context: IContext?): Boolean {
-                return true
-            }
+            override fun update(id: Long, payload: UpdatePayloadTest, context: IContext?): Boolean = true
         }
         assertEquals(
             true,
@@ -183,9 +166,7 @@ class IModelRepositoryTest {
     @Test
     fun testDelete() {
         val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
-            override fun delete(id: Long, context: IContext?): Boolean {
-                return true
-            }
+            override fun delete(id: Long, context: IContext?): Boolean = true
         }
         assertEquals(
             true,
@@ -196,9 +177,7 @@ class IModelRepositoryTest {
     @Test
     fun testDeleteNullContext() {
         val repository = object : IModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest> {
-            override fun delete(id: Long, context: IContext?): Boolean {
-                return true
-            }
+            override fun delete(id: Long, context: IContext?): Boolean = true
         }
         assertEquals(
             true,

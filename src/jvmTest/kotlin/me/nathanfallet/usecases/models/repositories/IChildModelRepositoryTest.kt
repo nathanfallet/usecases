@@ -3,6 +3,7 @@ package me.nathanfallet.usecases.models.repositories
 import me.nathanfallet.usecases.models.mock.CreatePayloadTest
 import me.nathanfallet.usecases.models.mock.ModelTest
 import me.nathanfallet.usecases.models.mock.UpdatePayloadTest
+import me.nathanfallet.usecases.pagination.Pagination
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
@@ -20,7 +21,7 @@ class IChildModelRepositoryTest {
     fun testListLimitOffsetUnsupported() {
         val repository = object : IChildModelRepository<ModelTest, Long, CreatePayloadTest, UpdatePayloadTest, Unit> {}
         assertFailsWith(UnsupportedOperationException::class) {
-            repository.list(1, 0, Unit)
+            repository.list(Pagination(1, 0), Unit)
         }
     }
 

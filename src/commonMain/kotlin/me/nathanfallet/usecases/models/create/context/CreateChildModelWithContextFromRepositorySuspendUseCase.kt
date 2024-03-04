@@ -8,8 +8,7 @@ open class CreateChildModelWithContextFromRepositorySuspendUseCase<Model : IChil
     private val repository: IChildModelSuspendRepository<Model, *, CreatePayload, *, ParentId>,
 ) : ICreateChildModelWithContextSuspendUseCase<Model, CreatePayload, ParentId> {
 
-    override suspend fun invoke(input1: CreatePayload, input2: ParentId, input3: IContext): Model? {
-        return repository.create(input1, input2, input3)
-    }
+    override suspend fun invoke(input1: CreatePayload, input2: ParentId, input3: IContext): Model? =
+        repository.create(input1, input2, input3)
 
 }

@@ -11,12 +11,9 @@ open class DeleteModelWithContextFromRepositoryUseCase<Model : IModel<Id, *, *>,
 ) : DeleteChildModelWithContextFromRepositoryUseCase<Model, Id, Unit>(repository),
     IDeleteModelWithContextUseCase<Model, Id> {
 
-    override fun invoke(input1: Id, input2: IContext): Boolean {
-        return invoke(input1, Unit, input2)
-    }
+    override fun invoke(input1: Id, input2: IContext): Boolean = invoke(input1, Unit, input2)
 
-    override fun invoke(input1: Id, input2: Unit, input3: IContext): Boolean {
-        return super<DeleteChildModelWithContextFromRepositoryUseCase>.invoke(input1, input2, input3)
-    }
+    override fun invoke(input1: Id, input2: Unit, input3: IContext): Boolean =
+        super<DeleteChildModelWithContextFromRepositoryUseCase>.invoke(input1, input2, input3)
 
 }

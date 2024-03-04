@@ -8,8 +8,6 @@ interface IDeleteModelWithContextSuspendUseCase<Model : IModel<Id, *, *>, Id> :
 
     suspend operator fun invoke(input1: Id, input2: IContext): Boolean
 
-    override suspend fun invoke(input1: Id, input2: Unit, input3: IContext): Boolean {
-        return invoke(input1, input3)
-    }
+    override suspend fun invoke(input1: Id, input2: Unit, input3: IContext): Boolean = invoke(input1, input3)
 
 }

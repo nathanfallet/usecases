@@ -12,8 +12,6 @@ interface IGetModelWithContextUseCase<Model : IModel<Id, *, *>, Id> :
     @JsName("invokeDefault")
     operator fun invoke(input1: Id, input2: IContext): Model?
 
-    override fun invoke(input1: Id, input2: Unit, input3: IContext): Model? {
-        return invoke(input1, input3)
-    }
+    override fun invoke(input1: Id, input2: Unit, input3: IContext): Model? = invoke(input1, input3)
 
 }

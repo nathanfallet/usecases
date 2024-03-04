@@ -1,35 +1,36 @@
 package me.nathanfallet.usecases.analytics
 
-import io.mockative.*
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.runBlocking
-import kotlin.test.AfterTest
 import kotlin.test.Test
 
 class ILogEventUseCaseAsSuspendTest {
 
-    @Mock
-    val useCase = mock(classOf<ILogEventUseCase>())
-
-    @AfterTest
-    fun after() {
-        verifyNoUnmetExpectations(useCase)
-    }
-
     @Test
     fun invokeSuspendFromNonSuspend() = runBlocking {
+        val useCase = mockk<ILogEventUseCase>()
         val suspendUseCase = ILogEventUseCaseAsSuspend(useCase)
-        suspendUseCase(
-            AnalyticsEventName("test"), mapOf(
-                AnalyticsEventParameter("test") to AnalyticsEventValue("test")
-            )
-        )
-        coVerify {
+        every {
             useCase(
                 AnalyticsEventName("test"), mapOf(
                     AnalyticsEventParameter("test") to AnalyticsEventValue("test")
                 )
             )
-        }.wasInvoked()
+        } returns Unit
+        suspendUseCase(
+            AnalyticsEventName("test"), mapOf(
+                AnalyticsEventParameter("test") to AnalyticsEventValue("test")
+            )
+        )
+        verify {
+            useCase(
+                AnalyticsEventName("test"), mapOf(
+                    AnalyticsEventParameter("test") to AnalyticsEventValue("test")
+                )
+            )
+        }
     }
 
 }

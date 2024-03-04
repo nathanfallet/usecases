@@ -1,5 +1,6 @@
 package me.nathanfallet.usecases.models.list.context
 
+import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import me.nathanfallet.usecases.context.IContext
 import me.nathanfallet.usecases.models.mock.ModelTest
@@ -11,12 +12,9 @@ class IListModelWithContextSuspendUseCaseTest {
     @Test
     fun testInvoke() = runBlocking {
         val useCase = object : IListModelWithContextSuspendUseCase<ModelTest> {
-            override suspend fun invoke(input: IContext): List<ModelTest> {
-                return listOf(ModelTest(1, "test"))
-            }
+            override suspend fun invoke(input: IContext): List<ModelTest> = listOf(ModelTest(1, "test"))
         }
-        val context = object : IContext {}
-        assertEquals(listOf(ModelTest(1, "test")), useCase(Unit, context))
+        assertEquals(listOf(ModelTest(1, "test")), useCase(Unit, mockk()))
     }
 
 }

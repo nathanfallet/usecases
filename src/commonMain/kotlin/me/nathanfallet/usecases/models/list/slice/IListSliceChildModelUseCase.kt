@@ -1,9 +1,10 @@
 package me.nathanfallet.usecases.models.list.slice
 
-import me.nathanfallet.usecases.base.ITripleUseCase
+import me.nathanfallet.usecases.base.IPairUseCase
 import me.nathanfallet.usecases.models.IChildModel
+import me.nathanfallet.usecases.pagination.Pagination
 import kotlin.js.JsExport
 
 @JsExport
 interface IListSliceChildModelUseCase<Model : IChildModel<*, *, *, ParentId>, ParentId> :
-    ITripleUseCase<Long, Long, ParentId, List<Model>>
+    IPairUseCase<Pagination, ParentId, List<Model>>

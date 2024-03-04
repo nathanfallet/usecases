@@ -10,8 +10,7 @@ open class DeleteChildModelWithContextFromRepositoryUseCase<Model : IChildModel<
     private val repository: IChildModelRepository<Model, Id, *, *, ParentId>,
 ) : IDeleteChildModelWithContextUseCase<Model, Id, ParentId> {
 
-    override fun invoke(input1: Id, input2: ParentId, input3: IContext): Boolean {
-        return repository.delete(input1, input2, input3)
-    }
+    override fun invoke(input1: Id, input2: ParentId, input3: IContext): Boolean =
+        repository.delete(input1, input2, input3)
 
 }

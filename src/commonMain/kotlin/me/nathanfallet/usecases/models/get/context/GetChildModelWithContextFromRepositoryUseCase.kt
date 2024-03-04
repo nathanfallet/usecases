@@ -10,8 +10,6 @@ open class GetChildModelWithContextFromRepositoryUseCase<Model : IChildModel<Id,
     private val repository: IChildModelRepository<Model, Id, *, *, ParentId>,
 ) : IGetChildModelWithContextUseCase<Model, Id, ParentId> {
 
-    override fun invoke(input1: Id, input2: ParentId, input3: IContext): Model? {
-        return repository.get(input1, input2, input3)
-    }
+    override fun invoke(input1: Id, input2: ParentId, input3: IContext): Model? = repository.get(input1, input2, input3)
 
 }

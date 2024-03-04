@@ -8,8 +8,7 @@ open class DeleteChildModelWithContextFromRepositorySuspendUseCase<Model : IChil
     private val repository: IChildModelSuspendRepository<Model, Id, *, *, ParentId>,
 ) : IDeleteChildModelWithContextSuspendUseCase<Model, Id, ParentId> {
 
-    override suspend fun invoke(input1: Id, input2: ParentId, input3: IContext): Boolean {
-        return repository.delete(input1, input2, input3)
-    }
+    override suspend fun invoke(input1: Id, input2: ParentId, input3: IContext): Boolean =
+        repository.delete(input1, input2, input3)
 
 }

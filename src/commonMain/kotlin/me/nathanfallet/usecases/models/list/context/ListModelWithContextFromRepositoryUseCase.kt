@@ -10,12 +10,9 @@ open class ListModelWithContextFromRepositoryUseCase<Model : IModel<*, *, *>>(
     repository: IModelRepository<Model, *, *, *>,
 ) : ListChildModelWithContextFromRepositoryUseCase<Model, Unit>(repository), IListModelWithContextUseCase<Model> {
 
-    override fun invoke(input: IContext): List<Model> {
-        return invoke(Unit, input)
-    }
+    override fun invoke(input: IContext): List<Model> = invoke(Unit, input)
 
-    override fun invoke(input1: Unit, input2: IContext): List<Model> {
-        return super<ListChildModelWithContextFromRepositoryUseCase>.invoke(input1, input2)
-    }
+    override fun invoke(input1: Unit, input2: IContext): List<Model> =
+        super<ListChildModelWithContextFromRepositoryUseCase>.invoke(input1, input2)
 
 }

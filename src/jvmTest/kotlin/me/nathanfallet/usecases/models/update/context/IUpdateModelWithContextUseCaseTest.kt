@@ -1,5 +1,6 @@
 package me.nathanfallet.usecases.models.update.context
 
+import io.mockk.mockk
 import me.nathanfallet.usecases.context.IContext
 import me.nathanfallet.usecases.models.mock.ModelTest
 import me.nathanfallet.usecases.models.mock.UpdatePayloadTest
@@ -11,12 +12,10 @@ class IUpdateModelWithContextUseCaseTest {
     @Test
     fun testInvoke() {
         val useCase = object : IUpdateModelWithContextUseCase<ModelTest, Long, UpdatePayloadTest> {
-            override fun invoke(input1: Long, input2: UpdatePayloadTest, input3: IContext): ModelTest {
-                return ModelTest(1, "test")
-            }
+            override fun invoke(input1: Long, input2: UpdatePayloadTest, input3: IContext): ModelTest =
+                ModelTest(1, "test")
         }
-        val context = object : IContext {}
-        assertEquals(ModelTest(1, "test"), useCase(1, UpdatePayloadTest("test"), Unit, context))
+        assertEquals(ModelTest(1, "test"), useCase(1, UpdatePayloadTest("test"), Unit, mockk()))
     }
 
 }

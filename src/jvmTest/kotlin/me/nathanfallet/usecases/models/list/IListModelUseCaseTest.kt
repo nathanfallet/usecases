@@ -9,9 +9,7 @@ class IListModelUseCaseTest {
     @Test
     fun testInvoke() {
         val useCase = object : IListModelUseCase<ModelTest> {
-            override fun invoke(): List<ModelTest> {
-                return listOf(ModelTest(1, "test"))
-            }
+            override fun invoke(): List<ModelTest> = listOf(ModelTest(1, "test"))
         }
         assertEquals(listOf(ModelTest(1, "test")), useCase(Unit))
     }

@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "me.nathanfallet.usecases"
-version = "1.5.6"
+version = "1.6.0"
 
 repositories {
     mavenCentral()
@@ -64,8 +64,8 @@ kotlin {
         }
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 
                 api("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
             }
@@ -75,26 +75,18 @@ kotlin {
                 implementation(kotlin("reflect"))
             }
         }
+        val jvmTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+                implementation("io.mockk:mockk:1.13.8")
+            }
+        }
         val jsMain by getting {
             dependencies {
                 api("org.jetbrains.kotlin-wrappers:kotlin-js:1.0.0-pre.648")
             }
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-                implementation("io.mockative:mockative:2.0.1")
-            }
-        }
     }
-}
-
-dependencies {
-    configurations
-        .filter { it.name.startsWith("ksp") && it.name.contains("Test") }
-        .forEach {
-            add(it.name, "io.mockative:mockative-processor:2.0.1")
-        }
 }
 
 npmPublish {

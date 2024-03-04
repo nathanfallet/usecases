@@ -11,12 +11,9 @@ open class CreateModelWithContextFromRepositoryUseCase<Model : IModel<*, CreateP
 ) : CreateChildModelWithContextFromRepositoryUseCase<Model, CreatePayload, Unit>(repository),
     ICreateModelWithContextUseCase<Model, CreatePayload> {
 
-    override fun invoke(input1: CreatePayload, input2: IContext): Model? {
-        return invoke(input1, Unit, input2)
-    }
+    override fun invoke(input1: CreatePayload, input2: IContext): Model? = invoke(input1, Unit, input2)
 
-    override fun invoke(input1: CreatePayload, input2: Unit, input3: IContext): Model? {
-        return super<CreateChildModelWithContextFromRepositoryUseCase>.invoke(input1, input2, input3)
-    }
+    override fun invoke(input1: CreatePayload, input2: Unit, input3: IContext): Model? =
+        super<CreateChildModelWithContextFromRepositoryUseCase>.invoke(input1, input2, input3)
 
 }

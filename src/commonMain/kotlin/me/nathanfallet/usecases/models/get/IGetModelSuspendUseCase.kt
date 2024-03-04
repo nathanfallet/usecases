@@ -6,8 +6,6 @@ interface IGetModelSuspendUseCase<Model : IModel<Id, *, *>, Id> : IGetChildModel
 
     suspend operator fun invoke(input: Id): Model?
 
-    override suspend fun invoke(input1: Id, input2: Unit): Model? {
-        return invoke(input1)
-    }
+    override suspend fun invoke(input1: Id, input2: Unit): Model? = invoke(input1)
 
 }

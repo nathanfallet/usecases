@@ -10,8 +10,8 @@ open class UpdateChildModelWithContextFromRepositoryUseCase<Model : IChildModel<
     private val repository: IChildModelRepository<Model, Id, *, UpdatePayload, ParentId>,
 ) : IUpdateChildModelWithContextUseCase<Model, Id, UpdatePayload, ParentId> {
 
-    override fun invoke(input1: Id, input2: UpdatePayload, input3: ParentId, input4: IContext): Model? {
-        return if (repository.update(input1, input2, input3, input4)) repository.get(input1, input3, input4) else null
-    }
+    override fun invoke(input1: Id, input2: UpdatePayload, input3: ParentId, input4: IContext): Model? =
+        if (repository.update(input1, input2, input3, input4)) repository.get(input1, input3, input4)
+        else null
 
 }

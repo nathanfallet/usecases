@@ -10,8 +10,7 @@ open class CreateChildModelWithContextFromRepositoryUseCase<Model : IChildModel<
     private val repository: IChildModelRepository<Model, *, CreatePayload, *, ParentId>,
 ) : ICreateChildModelWithContextUseCase<Model, CreatePayload, ParentId> {
 
-    override fun invoke(input1: CreatePayload, input2: ParentId, input3: IContext): Model? {
-        return repository.create(input1, input2, input3)
-    }
+    override fun invoke(input1: CreatePayload, input2: ParentId, input3: IContext): Model? =
+        repository.create(input1, input2, input3)
 
 }

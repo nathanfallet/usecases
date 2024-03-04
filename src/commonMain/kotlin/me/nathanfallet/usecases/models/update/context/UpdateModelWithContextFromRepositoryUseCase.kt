@@ -11,12 +11,10 @@ open class UpdateModelWithContextFromRepositoryUseCase<Model : IModel<Id, *, Upd
 ) : UpdateChildModelWithContextFromRepositoryUseCase<Model, Id, UpdatePayload, Unit>(repository),
     IUpdateModelWithContextUseCase<Model, Id, UpdatePayload> {
 
-    override fun invoke(input1: Id, input2: UpdatePayload, input3: IContext): Model? {
-        return invoke(input1, input2, Unit, input3)
-    }
+    override fun invoke(input1: Id, input2: UpdatePayload, input3: IContext): Model? =
+        invoke(input1, input2, Unit, input3)
 
-    override fun invoke(input1: Id, input2: UpdatePayload, input3: Unit, input4: IContext): Model? {
-        return super<UpdateChildModelWithContextFromRepositoryUseCase>.invoke(input1, input2, input3, input4)
-    }
+    override fun invoke(input1: Id, input2: UpdatePayload, input3: Unit, input4: IContext): Model? =
+        super<UpdateChildModelWithContextFromRepositoryUseCase>.invoke(input1, input2, input3, input4)
 
 }

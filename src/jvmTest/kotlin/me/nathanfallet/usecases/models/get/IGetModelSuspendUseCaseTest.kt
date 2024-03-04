@@ -10,9 +10,7 @@ class IGetModelSuspendUseCaseTest {
     @Test
     fun testInvoke() = runBlocking {
         val useCase = object : IGetModelSuspendUseCase<ModelTest, Long> {
-            override suspend fun invoke(input: Long): ModelTest {
-                return ModelTest(1, "test")
-            }
+            override suspend fun invoke(input: Long): ModelTest = ModelTest(1, "test")
         }
         assertEquals(ModelTest(1, "test"), useCase(1, Unit))
     }

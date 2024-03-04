@@ -8,8 +8,6 @@ open class ListChildModelWithContextFromRepositorySuspendUseCase<Model : IChildM
     private val repository: IChildModelSuspendRepository<Model, *, *, *, ParentId>,
 ) : IListChildModelWithContextSuspendUseCase<Model, ParentId> {
 
-    override suspend fun invoke(input1: ParentId, input2: IContext): List<Model> {
-        return repository.list(input1, input2)
-    }
+    override suspend fun invoke(input1: ParentId, input2: IContext): List<Model> = repository.list(input1, input2)
 
 }
