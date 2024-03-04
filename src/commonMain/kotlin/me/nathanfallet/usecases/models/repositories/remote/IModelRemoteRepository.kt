@@ -13,6 +13,8 @@ interface IModelRemoteRepository<Model : IModel<Id, CreatePayload, UpdatePayload
     suspend fun list(pagination: Pagination, context: IContext? = null): List<Model> =
         throw UnsupportedOperationException()
 
+    suspend fun count(context: IContext? = null): Long = throw UnsupportedOperationException()
+
     suspend fun get(id: Id, context: IContext? = null): Model? = throw UnsupportedOperationException()
 
     suspend fun create(payload: CreatePayload, context: IContext? = null): Model? =
@@ -30,6 +32,8 @@ interface IModelRemoteRepository<Model : IModel<Id, CreatePayload, UpdatePayload
         parentId: RecursiveId<*, Unit, *>,
         context: IContext?,
     ): List<Model> = list(pagination, context)
+
+    override suspend fun count(parentId: RecursiveId<*, Unit, *>, context: IContext?): Long = count(context)
 
     override suspend fun get(id: Id, parentId: RecursiveId<*, Unit, *>, context: IContext?): Model? = get(id, context)
 

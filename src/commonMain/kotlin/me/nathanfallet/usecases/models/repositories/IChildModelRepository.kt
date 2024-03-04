@@ -15,6 +15,8 @@ interface IChildModelRepository<Model : IChildModel<Id, CreatePayload, UpdatePay
     fun list(pagination: Pagination, parentId: ParentId, context: IContext? = null): List<Model> =
         throw UnsupportedOperationException()
 
+    fun count(parentId: ParentId, context: IContext? = null): Long = throw UnsupportedOperationException()
+
     fun get(id: Id, parentId: ParentId, context: IContext? = null): Model? = throw UnsupportedOperationException()
 
     fun create(payload: CreatePayload, parentId: ParentId, context: IContext? = null): Model? =

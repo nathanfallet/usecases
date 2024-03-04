@@ -11,6 +11,8 @@ interface IChildModelSuspendRepository<Model : IChildModel<Id, CreatePayload, Up
     suspend fun list(pagination: Pagination, parentId: ParentId, context: IContext? = null): List<Model> =
         throw UnsupportedOperationException()
 
+    suspend fun count(parentId: ParentId, context: IContext? = null): Long = throw UnsupportedOperationException()
+
     suspend fun get(id: Id, parentId: ParentId, context: IContext? = null): Model? =
         throw UnsupportedOperationException()
 

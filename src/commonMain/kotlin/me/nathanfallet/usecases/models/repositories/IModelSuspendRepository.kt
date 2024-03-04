@@ -12,6 +12,8 @@ interface IModelSuspendRepository<Model : IModel<Id, CreatePayload, UpdatePayloa
     suspend fun list(pagination: Pagination, context: IContext? = null): List<Model> =
         throw UnsupportedOperationException()
 
+    suspend fun count(context: IContext? = null): Long = throw UnsupportedOperationException()
+
     suspend fun get(id: Id, context: IContext? = null): Model? = throw UnsupportedOperationException()
 
     suspend fun create(payload: CreatePayload, context: IContext? = null): Model? =
@@ -26,6 +28,8 @@ interface IModelSuspendRepository<Model : IModel<Id, CreatePayload, UpdatePayloa
 
     override suspend fun list(pagination: Pagination, parentId: Unit, context: IContext?): List<Model> =
         list(pagination, context)
+
+    override suspend fun count(parentId: Unit, context: IContext?): Long = count(context)
 
     override suspend fun get(id: Id, parentId: Unit, context: IContext?): Model? = get(id, context)
 

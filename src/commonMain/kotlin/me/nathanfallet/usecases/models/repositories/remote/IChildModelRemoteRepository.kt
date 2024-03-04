@@ -16,6 +16,9 @@ interface IChildModelRemoteRepository<Model : IChildModel<Id, CreatePayload, Upd
         context: IContext? = null,
     ): List<Model> = throw UnsupportedOperationException()
 
+    suspend fun count(parentId: RecursiveId<*, ParentId, *>, context: IContext? = null): Long =
+        throw UnsupportedOperationException()
+
     suspend fun get(id: Id, parentId: RecursiveId<*, ParentId, *>, context: IContext? = null): Model? =
         throw UnsupportedOperationException()
 
